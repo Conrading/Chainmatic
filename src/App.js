@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import TestPlayer from './component/mainPlayer'
-import Account from './component/account'
+import MainPlayer from './component/mainPlayer'
+import Status from './component/status'
+import Chain from './component/chain'
+import Purchase from './component/purchase'
 import { Button, NavLink, InputGroup, Input, Container, Row, Col, Nav, NavItem } from 'reactstrap';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -28,10 +30,16 @@ class App extends Component {
                   <Link to={'/'} className="nav-link">Main Page</Link>  
                 </NavItem>
                 <NavItem>
-                  <Link to={'/account'} className="nav-link">Account</Link>
+                  <Link to={'/status'} className="nav-link">Status</Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink>Search Result</NavLink>
+                  <Link to={'/purchase'} className="nav-link">Purchase</Link>
+                </NavItem>
+                <NavItem>
+                  <Link to={'/chain'} className="nav-link">Chain</Link>
+                </NavItem>
+                <NavItem>
+                  <NavLink>Conversation</NavLink>
                 </NavItem>
               </Nav>
             </Col>
@@ -46,8 +54,10 @@ class App extends Component {
           </Row>
           <hr />
           <Switch>
-            <Route exact path='/' component={TestPlayer} />
-            <Route exact path='/account' component={Account} />
+            <Route exact path='/' component={MainPlayer} />
+            <Route exact path='/status' component={Status} />
+            <Route exact path='/purchase' component={Purchase} />
+            <Route exact path='/chain' component={Chain} />
           </Switch>
         </div>
         <div className="main-page">

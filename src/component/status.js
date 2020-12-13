@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import './account.css'
+import './status.css'
 import { Input, Col, Container, Alert, Row } from 'reactstrap'
 
-class Account extends Component {
+class Status extends Component {
     constructor () {
         super ();
         this.state = {
@@ -14,9 +14,7 @@ class Account extends Component {
         return (
             <Container>
                 <Alert className="general-text">
-                    Open your account here, you can subscribe for all video available, 
-                    or support single artist, 
-                    or invest single collaboration
+                    Here we show the block that demostrating each desire collaboration that user initiate and the progress
                 </Alert>
                 <Row className="center-object"> 
                     <Col sm={2} className="general-text">Name</Col>
@@ -38,4 +36,4 @@ class Account extends Component {
 }
 
 
-export default Account;
+export default Status;

@@ -61,7 +61,7 @@ class TestPlayer extends Component {
         //this.triplePlayer = React.createRef();
     }
     componentDidMount () {
-        http.get("/playing").then(res => {
+        http.get("/").then(res => {
             console.log(res)
             // extract from backend and store in importDB
             this.setState({ importDB: res.data })
