@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import './mainPlayer.css'
-import { Container, Button, Row, Input, Col, InputGroupAddon, InputGroupText, Form, FormGroup, Label } from 'reactstrap'
 
 class FileSetting extends Component {
     

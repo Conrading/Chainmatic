@@ -21,7 +21,6 @@ class Mainframe extends Component {
           <div className="title text text-pointer" onClick={() => {window.location = `/`}}>Chainmatic | 鏈 鎖 機 制</div>
           <div className="making-row">
             <div className="width-option text-pointer text" onClick={() => {window.location = '/hauptsachlich'}}>門</div>
-            <div className="width-option text-pointer text" onClick={() => {window.location = '/peoplesearch'}}>##</div>
           </div>
         </div>
         <hr />
