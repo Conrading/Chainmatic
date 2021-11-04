@@ -24,7 +24,7 @@ class Mainframe extends Component {
               <div className="width-option text-pointer text" onClick={() => {window.location = '/hauptsachlich'}}>門</div>
             </div>
           </div>
-          <br />
+          <hr />
           <Switch>
             <Route exact path='/' component={FrontPage} />
             <Route exact path='/hauptsachlich' component={SearchPage} />
