@@ -236,17 +236,8 @@ class TestPlayer extends Component {
                 controls = {this.state.controls}
                 />)
         })
-        // this generates dynemic buttons
-        let dynemicButton = this.state.currentDB.map((buttons) => {
-            return (
-                <Button outline color="success"
-                    key={buttons.title}
-                    value={buttons.title}
-                    onClick={this.fileSelection}>{buttons.title}</Button>
-            )
-        })
         return (
-            <div></div>
+            <body></body>
         );
     }
 }

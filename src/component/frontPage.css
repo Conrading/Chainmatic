@@ -17,7 +17,7 @@
     font-family: Courier New;
 }
 
-.body {
+.mainpage-body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -75,14 +75,19 @@
 }
 .moving-card {
     width: 151px;
-    height: 111px;
+    height: 51px;
     border: 2px solid brown;
     border-radius: 5px;
     padding: 31px 5px 5px 5px;
     cursor: pointer;
+    font-size: 17px;
     font-family: monospace;
     text-align: center;
     vertical-align: middle;
+}
+.moving-card:hover {
+    transition: .3s;
+    border: 3px solid rgb(189, 129, 121);
 }
 .moving-area div:nth-child(1) {
     margin-left: 27%;
@@ -139,7 +144,7 @@
 .more-customized-button {
     margin: auto;
     padding: 11px;
-    height: 51px;
+    height: 21px;
     width: 171px;
     border: 1px solid rgb(165, 164, 161);
     border-radius: 3px;
@@ -163,32 +168,6 @@
     transition: .3s;
     border: 2px solid rgb(189, 129, 121);
     color: oldlace;
-}
-
-
-.top-post-block {
-    background-image: url(https://pbs.twimg.com/media/FA8cACFWEAUsCc3?format=jpg&name=4096x4096) ;
-    height: 311px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    filter: brightness(91%) contrast(1.91);
-}
-.top-ersten-block-pic {
-    border-radius: 3px;
-    width: 191px;
-}
-.top-zweiten-block-pic {
-    border-radius: 3px;
-    margin-left: 31px;
-    width: 191px;
-}
-.top-text {
-    color: rgb(116, 16, 16);
-    font-size: 37px;
-    font-weight: 100;
-    font-family: Courier New;
 }
 
 
