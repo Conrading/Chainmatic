@@ -1,4 +1,7 @@
-
+.title-jedes-collaboration {
+  margin-top: 17px;
+  font-size: 27px;
+}
 .player-wrapper { 
     position: relative;
     float: inherit;
@@ -6,66 +9,54 @@
     margin: 0 auto;
     align-content: center;
     justify-content: center;
-    width: 90%;
+    width: 71%;
     height: 100%;
-  }
+}
 .react-player {
     position: relative;
     float: inherit;
-    border: 1px solid rgb(1, 38, 48);
     padding: 5px;
-    width: 90%;
+    width: 100%;
     height: 100%;
-  }
+}
 .player-itself {
   position: relative;
-  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.player-control {
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 17px;
+  width: 171px;
+  height: 31px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+}
+.half-center-margin {
+  margin-left: 32%;
 }
 .general-text {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  vertical-align: middle;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
 }
-.general-position {
-  position: relative;
-  margin: auto;
-  width: 100%;
+.jedes-spieler-infor {
+  border-radius: 3px;
+  height: 31px;
+  width: auto;
+  padding-top: 11px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
 }
-.button-play {
-  position: relative;
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
-  margin-top: 30px; 
+
+
+
+
+.input-personal-infor {
+  border-radius: 3px;
+  width: 311px;
+  height: 17px;
 }
-.button-flip {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px; 
-}
-.center-object {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-.parameterSetting {
-  text-align: center;
-  align-content: start;
-}
-.instant-text {
-  text-align: center;
-  color: #093b6d;
-  vertical-align: middle;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
+.text-left-gap {
+  margin-left: .5rem;
 }

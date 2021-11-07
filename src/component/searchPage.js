@@ -10,6 +10,7 @@ class Hauptsächlich extends Component {
         this.state = {
             projectSearch: null,
             searchResult: null,
+            light: true,
 
             importDefualtList: {
                 "firstLine": [],
@@ -36,24 +37,13 @@ class Hauptsächlich extends Component {
             this.setState({ searchResult: null })
         }
         //submit the data sort out critaria
-        http.post("/searchproject", {search: this.state.projectSearch.replace(/\W+/g, '-').toLowerCase()}).then((res) => {
+        http.post("/searchPerformance", {search: this.state.projectSearch.replace(/\W+/g, '-').toLowerCase()}).then((res) => {
            if (res.data.negative === "empty") {
                this.setState({ searchResult: "Search no result" })
             } else if (res.data.negative === "error") {
                 this.setState({ searchResult: res.data.error })
             } else {
-                let array = []
-                for (let i = 0; i < res.data.applicant.length; i++) {
-                    array.push(res.data.applicant[i])
-                }
-                for (let j = 0; j < res.data.title.length; j++) {
-                    array.push(res.data.title[j])
-                }
-                for (let k = 0; k < res.data.beschreibung.length; k++) {
-                    array.push(res.data.beschreibung[k])
-                }
-                console.log("alright: " + JSON.stringify(res.data))
-                this.setState({ searchResult: null, importDefualtList: array })
+                this.setState({ importDefualtList: res.data })
             } 
         })
     }
@@ -62,152 +52,112 @@ class Hauptsächlich extends Component {
     }
     render () {
         let erstenCard = this.state.importDefualtList.firstLine.map( i => {
-            let title = i.titel
-            if (i.titel.length > 37) {title = title.substring(0,37) + " ..."}
-            let description = i.beschreibung
-            if (i.beschreibung.length > 137) {description = description.substring(0, 137) + " ..."}
+            let title = i.konzertname
+            if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
             return (
                 <div className='card-project'>
                     <div className='up-gap'>
-                        {i.imag !== null &&
-                        <img top height="100px" width="100px" class="center"
-                            src={i.imag}
-                            alt="no trademark image" />}
-                        {i.video !== null &&
                         <ReactPlayer
-                            key={i.projectnumer}
+                            key={i.erstespieler}
                             className="player-itself"
-                            url= {i.video}
-                            width='291px'
+                            url= {i.erstelink}
+                            width='271px'
                             height='150px'
-                            muted = 'true'
-                            />}
-                        {i.video === null &&
-                        <div className="container limit-height-117px">
-                            <div className="text-courier-infor">{description}</div>
-                        </div>}
+                            light={this.state.light}
+                            controls = 'true'
+                            />
                     </div>
-                    <div className="limit-width-sieben center-object"><hr /></div>
+                    <div className="limit-width-sieben"><hr /></div>
                     <div className="container">
                         <div className="making-row text-row-height">
-                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/hauptsachlich/id=${i.projectnumer}`}}><b>{title}</b></div>
+                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
                         </div>
                         <div className="zweite-infor">
-                            <div className="text-left-gap" >Created by {i.antragsteller}</div>
+                            <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
                         </div>
                     </div>
                 </div>
             )
         })
         let zweitenCard = this.state.importDefualtList.secondLine.map( i => {
-            let title = i.titel
-            if (i.titel.length > 37) {title = title.substring(0,37) + " ..."}
-            let description = i.beschreibung
-            if (i.beschreibung.length > 137) {description = description.substring(0, 137) + " ..."}
+            let title = i.konzertname
+            if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
             return (
                 <div className='card-project'>
                     <div className='up-gap'>
-                        {i.imag !== null &&
-                        <img top height="100px" width="100px" class="center"
-                            src={i.imag}
-                            alt="no trademark image" />}
-                        {i.video !== null &&
                         <ReactPlayer
-                            key={i.projectnumer}
+                            key={i.erstespieler}
                             className="player-itself"
-                            url= {i.video}
-                            width='291px'
+                            url= {i.erstelink}
+                            width='271px'
                             height='150px'
-                            muted = 'true'
-                            />}
-                        {i.video === null &&
-                        <div className="container limit-height-117px">
-                            <div className="text-courier-infor">{description}</div>
-                        </div>}
+                            light={this.state.light}
+                            controls = 'true'
+                            />
                     </div>
-                    <div className="limit-width-sieben center-object"><hr /></div>
+                    <div className="limit-width-sieben"><hr /></div>
                     <div className="container">
                         <div className="making-row text-row-height">
-                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/hauptsachlich/id=${i.projectnumer}`}}><b>{title}</b></div>
+                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
                         </div>
                         <div className="zweite-infor">
-                            <div className="text-left-gap" >Created by {i.antragsteller}</div>
+                            <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
                         </div>
                     </div>
                 </div>
             )
         })
         let dreiCard = this.state.importDefualtList.thridLine.map( i => {
-            let title = i.titel
-            if (i.titel.length > 37) {title = title.substring(0,37) + " ..."}
-            let description = i.beschreibung
-            if (i.beschreibung.length > 137) {description = description.substring(0, 137) + " ..."}
+            let title = i.konzertname
+            if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
             return (
                 <div className='card-project'>
                     <div className='up-gap'>
-                        {i.imag !== null &&
-                        <img top height="100px" width="100px" class="center"
-                            src={i.imag}
-                            alt="no trademark image" />}
-                        {i.video !== null &&
                         <ReactPlayer
-                            key={i.projectnumer}
+                            key={i.erstespieler}
                             className="player-itself"
-                            url= {i.video}
-                            width='291px'
+                            url= {i.erstelink}
+                            width='271px'
                             height='150px'
-                            muted = 'true'
-                            />}
-                        {i.video === null &&
-                        <div className="container limit-height-117px">
-                            <div className="text-courier-infor">{description}</div>
-                        </div>}
+                            light={this.state.light}
+                            controls = 'true'
+                            />
                     </div>
-                    <div className="limit-width-sieben center-object"><hr /></div>
+                    <div className="limit-width-sieben"><hr /></div>
                     <div className="container">
                         <div className="making-row text-row-height">
-                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/hauptsachlich/id=${i.projectnumer}`}}><b>{title}</b></div>
+                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
                         </div>
                         <div className="zweite-infor">
-                            <div className="text-left-gap" >Created by {i.antragsteller}</div>
+                            <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
                         </div>
                     </div>
                 </div>
             )
         })
         let vierCard = this.state.importDefualtList.vierLine.map( i => {
-            let title = i.titel
-            if (i.titel.length > 37) {title = title.substring(0,37) + " ..."}
-            let description = i.beschreibung
-            if (i.beschreibung.length > 137) {description = description.substring(0, 137) + " ..."}
+            let title = i.konzertname
+            if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
             return (
                 <div className='card-project'>
                     <div className='up-gap'>
-                        {i.imag !== null &&
-                        <img top height="100px" width="100px" class="center"
-                            src={i.imag}
-                            alt="no trademark image" />}
-                        {i.video !== null &&
                         <ReactPlayer
-                            key={i.projectnumer}
+                            key={i.erstespieler}
                             className="player-itself"
-                            url= {i.video}
-                            width='291px'
+                            url= {i.erstelink}
+                            width='271px'
                             height='150px'
-                            muted = 'true'
-                            />}
-                        {i.video === null &&
-                        <div className="container limit-height-117px">
-                            <div className="text-courier-infor">{description}</div>
-                        </div>}
+                            light={this.state.light}
+                            controls = 'true'
+                            />
                     </div>
-                    <div className="limit-width-sieben center-object"><hr /></div>
+                    <div className="limit-width-sieben"><hr /></div>
                     <div className="container">
                         <div className="making-row text-row-height">
-                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/hauptsachlich/id=${i.projectnumer}`}}><b>{title}</b></div>
+                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
                         </div>
                         <div className="zweite-infor">
-                            <div className="text-left-gap" >Created by {i.antragsteller}</div>
+                            <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
                         </div>
                     </div>
                 </div>
@@ -221,7 +171,7 @@ class Hauptsächlich extends Component {
                 </div>
                 {this.state.searchResult !== null && <div><br /><div className="text-center">{this.state.searchResult}</div></div>}
                 <br />
-                <div className="making-row">
+                <div className="making-row center-by-margin">
                     <div className="width-column">{erstenCard}</div>
                     <div className="width-column">{zweitenCard}</div>
                     <div className="width-column">{dreiCard}</div>

@@ -14,13 +14,21 @@
 }
 .player-itself {
     position: relative;
-    left: 1%;
+    margin: auto;
     padding: 5px;
 }
 .container {
     padding: 2px;
 }
-
+.center-by-margin {
+    margin: 0 auto;
+    width: 71%;
+    float: inherit;
+}
+.width-column {
+    width: 311px;
+    float: inherit;
+}
 .up-gap {
     margin-top: 3%;
 }
@@ -30,17 +38,9 @@
 .limit-width-sieben {
     width: 71%;
 }
-.center-object {
-    position: relative;
-    align-content: center;
-    justify-content: center;
-}
 .zweite-infor {
     margin-top: 17px;
     margin-bottom: 11px;
-}
-.width-column {
-    width: 311px;
 }
 
 .text-courier-infor {
@@ -63,6 +63,7 @@
 .searchbar {
     margin: 0 auto;
     display: flex;
+    width: 71%;
 }
 .searchbar-input {
     display: flex;
@@ -71,6 +72,7 @@
     border-radius: 5px;
     border: 1px solid rgb(189, 129, 121);
     box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
+    padding: 3px;
     width: 210px;
 }
 .searchbar-button {

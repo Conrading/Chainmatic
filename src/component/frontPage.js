@@ -24,21 +24,21 @@ class Front extends Component {
                     <div className="making-row moving-area">
                         <div className="moving-card" onClick={() => {
                             this.setState({ 
-                                change: "1",
+                                change: "0",
                                 salesLine: "1st Place, 1st Sound, 1 Time",
                                 urlSwtiching: null
                             })
                         }}>!st Sound</div>
                         <div className="moving-card" onClick={() => {
                             this.setState({ 
-                                change: "1",
+                                change: "0",
                                 salesLine: "follow by 2nd Place, 2nd Sound, 2 Time",
                                 urlSwtiching: null
                             })
                         }}>2nd Sound</div>
                         <div className="moving-card" onClick={() => {
                             this.setState({ 
-                                change: "0",
+                                change: "1",
                                 salesLine: "Two sounds connecting without limit, distance, time are no longer the problem",
                                 urlSwtiching: '/hauptsachlich'
                             })

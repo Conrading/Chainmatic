@@ -1,0 +1,49 @@
+
+.block-anmeldung {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    height: 311px;
+    width: 331px;
+    border-radius: 5px;
+    border: 0.5px solid rgb(224, 222, 222);
+    margin: auto;
+}
+.block-anmeldung:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.logo-anmeldung {
+    height: 111px;
+}
+.gap-upper {
+    margin-top: 20px;
+}
+.text-anmeldung-title {
+    font-size: 7mm;
+    font-weight: 100;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.input-anmeldung {
+    border: 0.5px solid rgb(224, 222, 222);
+    border-radius: 3px;
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,0.2);
+    height: 17px;
+    background-color: beige;
+}
+.width-control-drei {
+    width: 31%;
+}
+.gap-both-siebzehn {
+    margin-left: 17px;
+    margin-left: 17px;
+}
+.anmeldung {
+    width: 171px;
+    margin: 5px;
+    padding: 2px 1px;
+    border: 1px solid rgb(224, 222, 222);
+    border-radius: 5px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+    font-size: 17px;
+    font-weight: 400;
+    color: rgb(56, 56, 56);
+}

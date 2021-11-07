@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-//import MainPlayer from './component/mainPlayer'
+import MainPlayer from './component/mainPlayer'
 import FrontPage from './component/frontPage'
 import SearchPage from './component/searchPage' 
+import Anmeldung from './component/anmeldung'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 
 class Mainframe extends Component {
-  constructor (props) {
-    super (props)
-    this.search = this.search.bind(this)
-  }
-  search () {
-    alert ("Sorry, we are still working on this part")
-  }
   render () {
     return (
       <Router>
@@ -28,6 +22,8 @@ class Mainframe extends Component {
           <Switch>
             <Route exact path='/' component={FrontPage} />
             <Route exact path='/hauptsachlich' component={SearchPage} />
+            <Route exact path='/jedes/id=:jedesVideoSpieler' component={MainPlayer} />
+            <Route exact path='/redact' component={Anmeldung} />
           </Switch>
           <br />
           <div className="text-center">
