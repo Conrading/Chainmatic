@@ -177,9 +177,7 @@ class TestPlayer extends Component {
                 <div className="making-row half-center-margin">
                     <button className="player-control" onClick={() => {this.spielerZählen()}}>
                         <div className="making-row spieler-symble">
-                            <img top height="21px" width="21px" class="center"
-                        src="https://cdn.icon-icons.com/icons2/2550/PNG/512/play_icon_152559.png"
-                        alt="no account image" />
+                            ▷
                             <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                         </div>
                     </button>
