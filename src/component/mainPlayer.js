@@ -18,14 +18,17 @@ class TestPlayer extends Component {
             muted: false,
             loop: false,
 
+            spielerZahlen: "",
+
             editorVersion: false,
         }
         this.hinzufugen = this.hinzufugen.bind(this); // seek volume value
         this.adjustingParameter = this.adjustingParameter.bind(this) // parameter submit button
+        this.spielerZählen = this.spielerZählen.bind(this)
     }
     componentDidMount () {
         http.get(`/jedes/id=${this.props.match.params.jedesVideoSpieler}`).then(res => {
-            this.setState({ currentDB: res.data.callOutCollaboration })
+            this.setState({ currentDB: res.data.callOutCollaboration, spielerZahlen: res.data.spielerzahlen.count })
             const oddMemory = []
             const evenMemory = []
             if (this.state.currentDB.erstelink !== null) {
@@ -102,6 +105,18 @@ class TestPlayer extends Component {
             }
         })
     }
+    spielerZählen () {
+        if (this.state.playing === false) {
+            this.setState({ playing: true })
+            http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
+                if (res.data.state === "fail") {
+                    this.setState({ currentDB: {"konzertname": "System Failure!"}})
+                } else {
+                    this.setState({ spielerZahlen: res.data.numer })
+                }
+            })
+        }
+    }
     render() {
         // this is for odd colume player
         let dynamicOddPlayer = this.state.oddPlayList.map((items) => {
@@ -160,8 +175,15 @@ class TestPlayer extends Component {
                 </div>
                 <br />
                 <div className="making-row half-center-margin">
-                    <button className="player-control" onClick={() => {this.setState({ playing: true })}}>Play</button>
-                    <button className="player-control" onClick={() => {this.setState({ playing: false })}}>Stop</button>
+                    <button className="player-control" onClick={() => {this.spielerZählen()}}>
+                        <div className="making-row spieler-symble">
+                            <img top height="21px" width="21px" class="center"
+                        src="https://cdn.icon-icons.com/icons2/2550/PNG/512/play_icon_152559.png"
+                        alt="no account image" />
+                            <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
+                        </div>
+                    </button>
+                    <button className="player-control" onClick={() => {this.setState({ playing: false })}}>| |</button>
                     <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
                 </div>
                 <br />
@@ -300,6 +322,61 @@ class TestPlayer extends Component {
                             }}/>
                         </div>
                         <div className="text-left-gap">{this.state.currentDB.zweitevolumne}</div>
+                    </div>
+                    <div className="making-row">
+                        <div>
+                            <input className="input-personal-infor" placeholder="3rd Player" type="text" 
+                            onChange={(e) => {
+                                let array = this.state.currentDB
+                                array.dreispieler = e.target.value
+                                this.setState({ currentDB: array })
+                            }}/>
+                        </div>
+                        <div className="text-left-gap">{this.state.currentDB.dreispieler}</div>
+                    </div>
+                    <div className="making-row">
+                        <div>
+                            <input className="input-personal-infor" placeholder="3rd Link" type="text" 
+                            onChange={(e) => {
+                                let array = this.state.currentDB
+                                array.dreilink = e.target.value
+                                this.setState({ currentDB: array })
+                            }}/>
+                        </div>
+                        <div className="text-left-gap">{this.state.currentDB.dreilink}</div>
+                    </div>
+                    <div className="making-row">
+                        <div>
+                            <input className="input-personal-infor" placeholder="3rd Location" type="text" 
+                            onChange={(e) => {
+                                let array = this.state.currentDB
+                                array.dreiort = e.target.value
+                                this.setState({ currentDB: array })
+                            }}/>
+                        </div>
+                        <div className="text-left-gap">{this.state.currentDB.dreiort}</div>
+                    </div>
+                    <div className="making-row">
+                        <div>
+                            <input className="input-personal-infor" placeholder="3rd start time" type="text" 
+                            onChange={(e) => {
+                                let array = this.state.currentDB
+                                array.dreispielerzeit = e.target.value
+                                this.setState({ currentDB: array })
+                            }}/>
+                        </div>
+                        <div className="text-left-gap">{this.state.currentDB.dreispielerzeit}</div>
+                    </div>
+                    <div className="making-row">
+                        <div>
+                            <input className="input-personal-infor" placeholder="3rd volumn" type="text" 
+                            onChange={(e) => {
+                                let array = this.state.currentDB
+                                array.dreivolumne = e.target.value
+                                this.setState({ currentDB: array })
+                            }}/>
+                        </div>
+                        <div className="text-left-gap">{this.state.currentDB.dreivolumne}</div>
                     </div>
                 <div className="making-row half-center-margin">
                     <button className="player-control" onClick={() => {this.adjustingParameter()}}>Update</button>

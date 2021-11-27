@@ -32,6 +32,15 @@
   height: 31px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
 }
+.spieler-zahlen {
+  font-weight: 300;
+  margin-left: 7px;
+  margin-top: 3px;
+}
+.spieler-symble {
+  align-content: center;
+  justify-content: center;
+}
 .half-center-margin {
   margin-left: 32%;
 }
