@@ -1,13 +1,44 @@
 import React, { Component } from 'react';
+import http from './component/http-axios'
 import './App.css';
 import MainPlayer from './component/mainPlayer'
 import FrontPage from './component/frontPage'
 import SearchPage from './component/searchPage' 
 import Anmeldung from './component/anmeldung'
+import Mitglied from './component/mitglied'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 
 class Mainframe extends Component {
+  constructor () {
+    super ();
+    this.state = {
+      logStauts: "LogIn",
+    }
+  }
+  componentDidMount () {
+    //check whether it is log-in
+    //get token certificate
+    //get token from localstorage
+    //but couldn't confirm token expire
+    const zertifikat = {"token": localStorage.getItem('token')}
+    http.post("/api/post", zertifikat).then((res) => {
+        //verify whether token is accept
+        if (res.data.status === 'login') { 
+          this.setState({ logStauts: "@" })
+        } else if (res.data.status === '400' || res.data.status === '401') {
+            //token expire
+            this.setState({ logStauts: "LogIn" })
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+        } else {
+          //token expire
+            this.setState({ logStauts: "LogIn" })
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+        }
+    })
+  }
   render () {
     return (
       <Router>
@@ -16,6 +47,8 @@ class Mainframe extends Component {
             <div className="title text text-pointer" onClick={() => {window.location = `/`}}>Chainmatic | 鏈 鎖 機 制</div>
             <div className="making-row">
               <div className="width-option text-pointer text" onClick={() => {window.location = '/hauptsachlich'}}>門</div>
+              {this.state.logStauts === "LogIn" && <div className="width-option text-pointer text" onClick={() => {window.location = '/anmeldung'}}>{this.state.logStauts}</div>}
+              {this.state.logStauts === "@" && <div className="width-option text-pointer text" onClick={() => {window.location = `/mitglied/id=${localStorage.getItem('user')}`}}>{this.state.logStauts}</div>}
             </div>
           </div>
           <hr />
@@ -23,7 +56,8 @@ class Mainframe extends Component {
             <Route exact path='/' component={FrontPage} />
             <Route exact path='/hauptsachlich' component={SearchPage} />
             <Route exact path='/jedes/id=:jedesVideoSpieler' component={MainPlayer} />
-            <Route exact path='/redact' component={Anmeldung} />
+            <Route exact path='/anmeldung' component={Anmeldung} />
+            <Route exact path='/mitglied/id=:kontoname' component={Mitglied} />
           </Switch>
           <br />
           <div className="text-center">

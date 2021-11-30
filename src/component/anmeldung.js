@@ -28,7 +28,7 @@ class Anmeldung extends Component {
                     localStorage.setItem('token', res.data.token)
                     localStorage.setItem('user', res.data.user)
                     //jump to correct page
-                    this.setState({ passwordfail: "You have already logged in" })
+                    window.location = `/mitglied/id=${localStorage.getItem('user')}`
                 }
             })
         } else if (this.state.userInput === null || this.state.codeInput === null) {
