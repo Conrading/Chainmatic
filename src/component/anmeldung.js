@@ -57,7 +57,7 @@ class Anmeldung extends Component {
                             <div className="width-control-drei gap-both-siebzehn"><hr /></div>
                         </div>
                     </div>
-                    <div className="text-center gap-upper">
+                    <div className="text-center">
                         <button className="anmeldung" onClick={() => this.anmelden()}>Login</button>
                     </div>
                 </div>
