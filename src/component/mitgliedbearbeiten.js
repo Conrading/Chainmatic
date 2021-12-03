@@ -12,6 +12,8 @@ class Mitgliedbearbeiten extends Component {
             ort: null,
             follower: null,
             importDefualtList: null,
+
+            updateMessage: null
         }
         this.aktualisieren = this.aktualisieren.bind(this)
     }
@@ -27,26 +29,22 @@ class Mitgliedbearbeiten extends Component {
         })
     }
     aktualisieren () {
-        const konto = [{ 
-            "user": this.state.userInput,
-            "password": this.state.codeInput 
-        }]
-        if (this.state.userInput !== null && this.state.codeInput !== null) {
-            http.post("/anmeldung", konto).then((res) => {
+        const kontoUpdate = { 
+            "konto": localStorage.getItem('user'),
+            "bildung": this.state.bildung,
+            "ort": this.state.ort 
+        }
+        if (this.state.bildung !== null || this.state.ort !== null) {
+            http.post("/mitgliedbearbeiten", kontoUpdate).then((res) => {
                 if (res.data.status === 'fail') {
-                    this.setState({ passwordfail: "sorry, incorrect user name or password" })
+                    this.setState({ updateMessage: "sorry, system mistake" })
                 } else {
-                    //store token in localstorage
-                    localStorage.setItem('token', res.data.token)
-                    localStorage.setItem('user', res.data.user)
-                    window.location = `/mitglied/id=${localStorage.getItem('user')}`
+                    this.setState({ updateMessage: "Update success!!" })
                 }
             })
-        } else if (this.state.userInput === null || this.state.codeInput === null) {
+        } else if (this.state.bildung === null && this.state.ort === null) {
             this.setState({ 
-                passwordfail: "You can't login with your account and password",
-                userInput: null,
-                codeInput: null,
+                updateMessage: "Wha do you want to update?",
             })
         }
     }
@@ -82,7 +80,7 @@ class Mitgliedbearbeiten extends Component {
                     </div>
                 </div>
                 <br />
-                <div className="text-center">{this.state.passwordfail}</div>
+                <div className="text-center">{this.state.updateMessage}</div>
             </body>
         )
     }

@@ -72,7 +72,7 @@ class TestPlayer extends Component {
         const zertifikat = {"token": localStorage.getItem('token')}
         http.post("/api/post", zertifikat).then((res) => {
             //verify whether token is accept
-            if (res.data.status === 'login') { 
+            if (res.data.status === 'login' && localStorage.getItem('user') === "conrading") { 
                 //log-in success
                 this.setState({ editorVersion: true })
             } else if (res.data.status === '400' || res.data.status === '401') {
