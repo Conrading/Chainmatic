@@ -6,6 +6,7 @@ import FrontPage from './component/frontPage'
 import SearchPage from './component/searchPage' 
 import Anmeldung from './component/anmeldung'
 import Mitglied from './component/mitglied'
+import Mitgliedbearbeiten from './component/mitgliedbearbeiten'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 
@@ -28,12 +29,12 @@ class Mainframe extends Component {
           this.setState({ logStauts: "@" })
         } else if (res.data.status === '400' || res.data.status === '401') {
             //token expire
-            this.setState({ logStauts: "LogIn" })
+            this.setState({ logStauts: "登" })
             localStorage.removeItem('token')
             localStorage.removeItem('user')
         } else {
           //token expire
-            this.setState({ logStauts: "LogIn" })
+            this.setState({ logStauts: "登" })
           localStorage.removeItem('token')
           localStorage.removeItem('user')
         }
@@ -47,7 +48,7 @@ class Mainframe extends Component {
             <div className="title text text-pointer" onClick={() => {window.location = `/`}}>Chainmatic | 鏈 鎖 機 制</div>
             <div className="making-row">
               <div className="width-option text-pointer text" onClick={() => {window.location = '/hauptsachlich'}}>門</div>
-              {this.state.logStauts === "LogIn" && <div className="width-option text-pointer text" onClick={() => {window.location = '/anmeldung'}}>{this.state.logStauts}</div>}
+              {this.state.logStauts === "登" && <div className="width-option text-pointer text" onClick={() => {window.location = '/anmeldung'}}>{this.state.logStauts}</div>}
               {this.state.logStauts === "@" && <div className="width-option text-pointer text" onClick={() => {window.location = `/mitglied/id=${localStorage.getItem('user')}`}}>{this.state.logStauts}</div>}
             </div>
           </div>
@@ -58,6 +59,7 @@ class Mainframe extends Component {
             <Route exact path='/jedes/id=:jedesVideoSpieler' component={MainPlayer} />
             <Route exact path='/anmeldung' component={Anmeldung} />
             <Route exact path='/mitglied/id=:kontoname' component={Mitglied} />
+            <Route exact path='/mitgliedbearbeiten/id=:kontoname' component={Mitgliedbearbeiten} />
           </Switch>
           <br />
           <div className="text-center">

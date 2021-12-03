@@ -15,18 +15,28 @@ class Mitglied extends Component {
             follower: null,
             importDefualtList: null,
 
+            followerStatus: false
         }
         this.abmeldung = this.abmeldung.bind(this)
+        this.hinzufugenAnhänger = this.hinzufugenAnhänger.bind(this)
     }
     componentDidMount () {
-        http.get(`/mitglied/id=${this.props.match.params.kontoname}`).then((res) => {
+        http.post(`/mitglied/id=${this.props.match.params.kontoname}`, {"user": localStorage.getItem('user')}).then((res) => {
             this.setState({ 
                 verified: res.data.kontodaten.verified,
                 bildung: res.data.kontodaten.bildung,
                 ort: res.data.kontodaten.ort,
-                follower: res.data.kontodaten.follower,
+                follower: res.data.followers,
                 importDefualtList: res.data
             })
+            if (res.data.followerStatus === 0) { this.setState({ followerStatus: false })} else {this.setState({ followerStatus: true })}
+        })
+    }
+    hinzufugenAnhänger () {
+        http.post('/hinzufugenAnhänger', {"follower": localStorage.getItem('user'), "player": this.props.match.params.kontoname}).then((res) => {
+            if (res.data.status === "fail") {
+                alert("System mistake, please try again")
+            } else {  window.location = `/mitglied/id=${this.props.match.params.kontoname}` }
         })
     }
     abmeldung () {
@@ -172,19 +182,24 @@ class Mitglied extends Component {
                         {localStorage.getItem('user') === null && <b>{localStorage.getItem('user').toUpperCase()}</b>}
                         {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && <b>{localStorage.getItem('user').toUpperCase()}</b>}
                         {localStorage.getItem('user') !== null && localStorage.getItem('user') === this.props.match.params.kontoname &&
-                        <div className="text-pointer" onClick={() => {window.location = `/mitgliedinformation/id=${localStorage.getItem('user')}`}}>
+                        <div className="text-pointer" onClick={() => {window.location = `/mitgliedbearbeiten/id=${localStorage.getItem('user')}`}}>
                             <b>{localStorage.getItem('user').toUpperCase()}</b>
                         </div>}
                         {localStorage.getItem('user') !== null && localStorage.getItem('user') === this.props.match.params.kontoname &&
                         <div className="text-pointer logout-text" onClick={() => {this.abmeldung()}}>Log-Out</div>}
-                    </div>
-                    <div className="personal-left-gap making-row personal-upper-right-gap-second">
-                        <div>in {this.state.ort} |</div>
-                        <div><div className="follower-text">{this.state.follower} Followers</div></div>
                         {this.state.verified === true && 
                         <div className="making-row"><img top height="21px" width="21px" class="center"
                         src="https://www.myusfra.org/images/1.3_1.png"
                         alt="no verified image" /><b>verified!</b></div>}
+                    </div>
+                    <div className="personal-left-gap making-row personal-upper-right-gap-second">
+                        <div>in {this.state.ort} |</div>
+                        <div><div className="follower-text">{this.state.follower} Followers</div></div>
+                        {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && 
+                        <div className="follow-tab" onClick={() => {this.hinzufugenAnhänger()}}>
+                            {this.state.followerStatus === false && <b>Following</b>}
+                            {this.state.followerStatus === true && <b>unFollow</b>}
+                            </div>}
                     </div>
                 </div>
             </div>
