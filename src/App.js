@@ -62,7 +62,10 @@ class Mainframe extends Component {
             <Route exact path='/mitgliedbearbeiten/id=:kontoname' component={Mitgliedbearbeiten} />
           </Switch>
           <br />
-          <div className="text-center">
+          <div className="boden-text">
+            <div className="boden-linie"></div>
+            <div className="text-pointer boden-linie-height" onClick={() => {window.location.href = 'https://31withnowhere.wixsite.com/chainmatic'}}>About</div>
+            <div className="text-pointer boden-linie-height" onClick={() => {window.location.href = 'https://31withnowhere.wixsite.com/chainmatic/feedback'}}>Feedback</div>
             <div>@2021 Chainmatic | 鏈 鎖 機 制, All Rights Reserved</div>
           </div>
         </body>

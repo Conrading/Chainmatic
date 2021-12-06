@@ -34,3 +34,18 @@
   margin-top: 17px;
   width: 51px;
 }
+
+.boden-text {
+  margin: 0 auto;
+  width: 51%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: darkkhaki;
+}
+.boden-linie {
+  margin-top: 31px;
+  margin-bottom: 17px;
+  border-top: 1px solid darkgray;
+}
+.boden-linie-height {
+  height: 31px;
+}
