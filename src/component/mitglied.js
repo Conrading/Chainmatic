@@ -179,7 +179,7 @@ class Mitglied extends Component {
                 </div>
                 <div >
                     <div className="personal-left-gap making-row personal-upper-right-gap">
-                        {localStorage.getItem('user') === null && <b>{localStorage.getItem('user').toUpperCase()}</b>}
+                        {localStorage.getItem('user') === null && <b>{this.props.match.params.kontoname.toUpperCase()}</b>}
                         {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && <b>{localStorage.getItem('user').toUpperCase()}</b>}
                         {localStorage.getItem('user') !== null && localStorage.getItem('user') === this.props.match.params.kontoname &&
                         <div className="text-pointer" onClick={() => {window.location = `/mitgliedbearbeiten/id=${localStorage.getItem('user')}`}}>

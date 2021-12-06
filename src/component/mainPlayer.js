@@ -122,7 +122,8 @@ class TestPlayer extends Component {
         let dynamicOddPlayer = this.state.oddPlayList.map((items) => {
             return (
                 <div>
-                    <div className="general-text text-center jedes-spieler-infor"><b>{items.spieler}</b> in {items.ort}</div>
+                    <div className="general-text text-center jedes-spieler-infor">
+                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${items.spieler}`}}>{items.spieler}</b> in {items.ort}</div>
                     <br />
                     <ReactPlayer
                     key={items.source}
@@ -145,7 +146,8 @@ class TestPlayer extends Component {
         let dynamicEvenPlayer = this.state.evenPlayList.map((items) => {
             return (
                 <div>
-                    <div className="general-text text-center jedes-spieler-infor"><b>{items.spieler}</b> in {items.ort}</div>
+                    <div className="general-text text-center jedes-spieler-infor">
+                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${items.spieler}`}}>{items.spieler}</b> in {items.ort}</div>
                     <br />
                     <ReactPlayer
                     key={items.source}
