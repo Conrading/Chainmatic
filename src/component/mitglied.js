@@ -33,7 +33,7 @@ class Mitglied extends Component {
         })
     }
     hinzufugenAnhänger () {
-        http.post('/hinzufugenAnhänger', {"follower": localStorage.getItem('user'), "player": this.props.match.params.kontoname}).then((res) => {
+        http.post('/hinzufugenanhanger', {"follower": localStorage.getItem('user'), "player": this.props.match.params.kontoname}).then((res) => {
             if (res.data.status === "fail") {
                 alert("System mistake, please try again")
             } else {  window.location = `/mitglied/id=${this.props.match.params.kontoname}` }
@@ -180,7 +180,7 @@ class Mitglied extends Component {
                 <div >
                     <div className="personal-left-gap making-row personal-upper-right-gap">
                         {localStorage.getItem('user') === null && <b>{this.props.match.params.kontoname.toUpperCase()}</b>}
-                        {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && <b>{localStorage.getItem('user').toUpperCase()}</b>}
+                        {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && <b>{this.props.match.params.kontoname.toUpperCase()}</b>}
                         {localStorage.getItem('user') !== null && localStorage.getItem('user') === this.props.match.params.kontoname &&
                         <div className="text-pointer" onClick={() => {window.location = `/mitgliedbearbeiten/id=${localStorage.getItem('user')}`}}>
                             <b>{localStorage.getItem('user').toUpperCase()}</b>
@@ -196,7 +196,7 @@ class Mitglied extends Component {
                         <div>in {this.state.ort} |</div>
                         <div><div className="follower-text">{this.state.follower} Followers</div></div>
                         {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && 
-                        <div className="follow-tab" onClick={() => {this.hinzufugenAnhänger()}}>
+                        <div className="text-pointer follow-tab" onClick={() => {this.hinzufugenAnhänger()}}>
                             {this.state.followerStatus === false && <b>Following</b>}
                             {this.state.followerStatus === true && <b>unFollow</b>}
                             </div>}

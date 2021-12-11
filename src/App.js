@@ -18,23 +18,18 @@ class Mainframe extends Component {
     }
   }
   componentDidMount () {
-    //check whether it is log-in
-    //get token certificate
-    //get token from localstorage
-    //but couldn't confirm token expire
     const zertifikat = {"token": localStorage.getItem('token')}
     http.post("/api/post", zertifikat).then((res) => {
-        //verify whether token is accept
         if (res.data.status === 'login') { 
           this.setState({ logStauts: "@" })
         } else if (res.data.status === '400' || res.data.status === '401') {
-            //token expire
-            this.setState({ logStauts: "登" })
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
+          //token expire
+          this.setState({ logStauts: "登" })
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
         } else {
           //token expire
-            this.setState({ logStauts: "登" })
+          this.setState({ logStauts: "登" })
           localStorage.removeItem('token')
           localStorage.removeItem('user')
         }

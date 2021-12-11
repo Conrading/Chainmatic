@@ -24,9 +24,12 @@ class Mitgliedbearbeiten extends Component {
         this.passwordCheck = this.passwordCheck.bind(this)
     }
     componentDidMount () {
-        http.post(`/mitglied/id=${localStorage.getItem('user')}`, {"user": localStorage.getItem('user')}).then((res) => {
-            let bildungLink = res.data.kontodaten.bildung
-            if (res.data.kontodaten.bildung.length > 51) {bildungLink = bildungLink.substring(0,51) + " ..."}
+        http.get(`/mitgliedbearbeiten/id=${this.props.match.params.kontoname}`).then((res) => {
+            let bildungLink = ""
+            if (res.data.kontodaten.bildung !== null) {
+                bildungLink = res.data.kontodaten.bildung
+                if (res.data.kontodaten.bildung.length > 51) {bildungLink = bildungLink.substring(0,51) + " ..."}
+            }
             this.setState({ 
                 verified: res.data.kontodaten.verified,
                 bildung: res.data.kontodaten.bildung,

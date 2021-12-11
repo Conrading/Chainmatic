@@ -75,6 +75,8 @@ class TestPlayer extends Component {
             if (res.data.status === 'login' && localStorage.getItem('user') === "conrading") { 
                 //log-in success
                 this.setState({ editorVersion: true })
+            } else if (res.data.status === 'login') {
+                //
             } else if (res.data.status === '400' || res.data.status === '401') {
                 //token expire
                 localStorage.removeItem('token')
