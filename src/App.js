@@ -15,7 +15,16 @@ class Mainframe extends Component {
     super ();
     this.state = {
       logStauts: "LogIn",
+
+      width: window.innerWidth,
     }
+    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
+  }
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
   }
   componentDidMount () {
     const zertifikat = {"token": localStorage.getItem('token')}
@@ -35,13 +44,17 @@ class Mainframe extends Component {
         }
     })
   }
+  handleWindowSizeChange () {
+    this.setState({ width: window.innerWidth });
+  };
   render () {
     return (
       <Router>
+        {this.state.width > 911 &&
         <body className="main-frame-tighten">
-          <div className="making-row separate-two-side">
+          <div className="title-row separate-two-side">
             <div className="title text text-pointer" onClick={() => {window.location = `/`}}>Chainmatic | 鏈 鎖 機 制</div>
-            <div className="making-row">
+            <div className="title-row">
               <div className="width-option text-pointer text" onClick={() => {window.location = '/hauptsachlich'}}>門</div>
               {this.state.logStauts === "登" && <div className="width-option text-pointer text" onClick={() => {window.location = '/anmeldung'}}>{this.state.logStauts}</div>}
               {this.state.logStauts === "@" && <div className="width-option text-pointer text" onClick={() => {window.location = `/mitglied/id=${localStorage.getItem('user')}`}}>{this.state.logStauts}</div>}
@@ -63,7 +76,27 @@ class Mainframe extends Component {
             <div className="text-pointer boden-linie-height" onClick={() => {window.location.href = 'https://31withnowhere.wixsite.com/chainmatic/feedback'}}>Feedback</div>
             <div>@2021 Chainmatic | 鏈 鎖 機 制, All Rights Reserved</div>
           </div>
-        </body>
+        </body>}
+        {this.state.width < 911 &&
+        <body>
+          <div className="title-row separate-two-side">
+            <div className="title text text-pointer" onClick={() => {window.location = `/`}}>Chainmatic | 鏈 鎖 機 制</div>
+            <div className="title-row">
+              <div className="width-option text-pointer text" onClick={() => {window.location = '/hauptsachlich'}}>門</div>
+              {this.state.logStauts === "登" && <div className="width-option text-pointer text" onClick={() => {window.location = '/anmeldung'}}>{this.state.logStauts}</div>}
+              {this.state.logStauts === "@" && <div className="width-option text-pointer text" onClick={() => {window.location = `/mitglied/id=${localStorage.getItem('user')}`}}>{this.state.logStauts}</div>}
+            </div>
+          </div>
+          <hr />
+          <Switch>
+            <Route exact path='/' component={FrontPage} />
+            <Route exact path='/hauptsachlich' component={SearchPage} />
+            <Route exact path='/jedes/id=:jedesVideoSpieler' component={MainPlayer} />
+            <Route exact path='/anmeldung' component={Anmeldung} />
+            <Route exact path='/mitglied/id=:kontoname' component={Mitglied} />
+            <Route exact path='/mitgliedbearbeiten/id=:kontoname' component={Mitgliedbearbeiten} />
+          </Switch>
+        </body>}
       </Router>
     );
   }

@@ -8,66 +8,78 @@ class TestPlayer extends Component {
         super (props);
         this.state = {
             currentDB: [], // for uploading and reading current buttons
-            oddPlayList: [], // separate renderingDB to odd colume
-            evenPlayList: [], // separate renderingDB to even colume
+            erstelink: [], 
+            erstePlaying: false,
+            zweitelink: [], 
+            zweitePlaying: false,
+            dreilink: [],
+            dreiPlaying: false,
+            viertelink: [],
+            viertePlaying: false,
 
-            //player setting
-            playing: false,
+            //other player setting
             controls: true,
-            light: false,
+            light: true,
             muted: false,
             loop: false,
 
             spielerZahlen: "",
 
             editorVersion: false,
+            width: window.innerWidth,
         }
         this.hinzufugen = this.hinzufugen.bind(this); // seek volume value
         this.adjustingParameter = this.adjustingParameter.bind(this) // parameter submit button
         this.spielerZählen = this.spielerZählen.bind(this)
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this) //switch to cellphone
     }
     componentDidMount () {
         http.get(`/jedes/id=${this.props.match.params.jedesVideoSpieler}`).then(res => {
             this.setState({ currentDB: res.data.callOutCollaboration, spielerZahlen: res.data.spielerzahlen.count })
-            const oddMemory = []
-            const evenMemory = []
             if (this.state.currentDB.erstelink !== null) {
-                oddMemory.push({
+                const erinnerung = []
+                erinnerung.push({
                     "source": this.state.currentDB.erstelink,
                     "spieler": this.state.currentDB.erstespieler,
                     "ort": this.state.currentDB.ersteort,
                     "startPlay": this.state.currentDB.erstespielerzeit,
                     "volume": this.state.currentDB.erstevolumne
                 })
+                this.setState({ erstelink: erinnerung })
             } 
             if (this.state.currentDB.zweitelink !== null) {
-                evenMemory.push({
+                const erinnerung = []
+                erinnerung.push({
                     "source": this.state.currentDB.zweitelink,
                     "spieler": this.state.currentDB.zweitespieler,
                     "ort": this.state.currentDB.zweiteort,
                     "startPlay": this.state.currentDB.zweitespielerzeit,
                     "volume": this.state.currentDB.zweitevolumne
                 })
+                this.setState({ zweitelink: erinnerung })
             } 
             if (this.state.currentDB.dreilink !== null) {
-                oddMemory.push({
+                const erinnerung = []
+                erinnerung.push({
                     "source": this.state.currentDB.dreilink,
                     "spieler": this.state.currentDB.dreispieler,
                     "ort": this.state.currentDB.dreiort,
                     "startPlay": this.state.currentDB.dreispielerzeit,
                     "volume": this.state.currentDB.dreivolumne
                 })
+                this.setState({ dreilink: erinnerung })
             } 
             if (this.state.currentDB.viertelink !== null) {
-                evenMemory.push({
+                const erinnerung = []
+                erinnerung.push({
                     "source": this.state.currentDB.viertelink,
                     "spieler": this.state.currentDB.viertespieler,
                     "ort": this.state.currentDB.vierteort,
                     "startPlay": this.state.currentDB.viertespielerzeit,
                     "volume": this.state.currentDB.viertevolumne
                 })
+                this.setState({ viertelink: erinnerung })
             }
-            this.setState({ oddPlayList: oddMemory, evenPlayList: evenMemory})
         })
         const zertifikat = {"token": localStorage.getItem('token')}
         http.post("/api/post", zertifikat).then((res) => {
@@ -89,6 +101,15 @@ class TestPlayer extends Component {
             }
         })
     }
+    componentWillMount() {
+      window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+    handleWindowSizeChange () {
+      this.setState({ width: window.innerWidth });
+    };
     adjustingParameter () {
         http.post("/updateParameter", {"update": this.state.currentDB}).then((res) => {
             if (res.data.state === "fail") {
@@ -108,74 +129,107 @@ class TestPlayer extends Component {
         })
     }
     spielerZählen () {
-        if (this.state.playing === false) {
-            this.setState({ playing: true })
-            http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
-                if (res.data.state === "fail") {
-                    this.setState({ currentDB: {"konzertname": "System Failure!"}})
-                } else {
-                    this.setState({ spielerZahlen: res.data.numer })
-                }
-            })
-        }
+        this.setState({ light: false })
+        this.setState({ erstePlaying: true, zweitePlaying: true, dreiPlaying: true, viertePlaying: true })
+        http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
+            if (res.data.state === "fail") {
+                this.setState({ currentDB: {"konzertname": "System Failure!"}})
+            } else {
+                this.setState({ spielerZahlen: res.data.numer })
+            }
+        })
     }
     render() {
-        // this is for odd colume player
-        let dynamicOddPlayer = this.state.oddPlayList.map((items) => {
-            return (
-                <div>
-                    <div className="general-text text-center jedes-spieler-infor">
-                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${items.spieler}`}}>{items.spieler}</b> in {items.ort}</div>
-                    <br />
-                    <ReactPlayer
-                    key={items.source}
-                    className="player-itself"
-                    ref={oddPlayer => (this.oddPlayer = oddPlayer)} //set this player ref
-                    onReady={() => {this.oddPlayer.seekTo(parseFloat(items.startPlay))}} //set start time once it is ready
-                    url= {items.source}
-                    width='480px'
-                    height='270px'
-                    light={this.state.light}
-                    playing={this.state.playing}
-                    volume={items.volume}
-                    loop = {this.state.loop}
-                    controls = {this.state.controls}
-                    />
-                </div>
-                )
-        })
-        //this is for even colume player
-        let dynamicEvenPlayer = this.state.evenPlayList.map((items) => {
-            return (
-                <div>
-                    <div className="general-text text-center jedes-spieler-infor">
-                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${items.spieler}`}}>{items.spieler}</b> in {items.ort}</div>
-                    <br />
-                    <ReactPlayer
-                    key={items.source}
-                    className="player-itself"
-                    ref={evenPlayer => (this.evenPlayer = evenPlayer)} //set this player ref
-                    onReady={() => {this.evenPlayer.seekTo(parseFloat(items.startPlay))}} //set start time once it is ready
-                    url= {items.source}
-                    width='480px'
-                    height='270px'
-                    light={this.state.light}
-                    playing={this.state.playing}
-                    volume={items.volume}
-                    loop = {this.state.loop}
-                    controls = {this.state.controls}
-                    />
-                </div>
-            )
-        })
         return (
+            <div>
+                {this.state.width > 911 && 
             <body>
                 <div className="text-center title-jedes-collaboration general-text">{this.state.currentDB.konzertname}</div>
                 <div className="making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.currentDB.datenundzeit}</div>
                 <br />
                 <div className="making-row player-wrapper">
-                    <div className='react-player'>{dynamicOddPlayer}</div>
-                    <div className='react-player'>{dynamicEvenPlayer}</div>
+                    {this.state.erstelink.length > 0 && 
+                    <div  className='react-player'>
+                        <div className="general-text text-center jedes-spieler-infor">
+                            <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.erstelink[0].spieler}`}}>{this.state.erstelink[0].spieler}</b> in {this.state.erstelink[0].ort}</div>
+                        <br />
+                        <ReactPlayer
+                        key={this.state.erstelink[0].source}
+                        className="player-itself"
+                        ref={erstePlayer => (this.erstePlayer = erstePlayer)} //set this player ref
+                        onReady={() => {this.erstePlayer.seekTo(parseFloat(this.state.erstelink[0].startPlay))}} //set start time once it is ready
+                        url= {this.state.erstelink[0].source}
+                        width='480px'
+                        height='270px'
+                        light={this.state.light}
+                        playing={this.state.erstePlaying}
+                        volume={this.state.erstelink[0].volume}
+                        loop = {this.state.loop}
+                        controls = {this.state.controls}
+                        />
+                    </div>}
+                    {this.state.zweitelink.length > 0 && 
+                    <div  className='react-player'>
+                        <div className="general-text text-center jedes-spieler-infor">
+                            <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.zweitelink[0].spieler}`}}>{this.state.zweitelink[0].spieler}</b> in {this.state.zweitelink[0].ort}</div>
+                        <br />
+                        <ReactPlayer
+                        key={this.state.zweitelink[0].source}
+                        className="player-itself"
+                        ref={zweitePlayer => (this.zweitePlayer = zweitePlayer)} //set this player ref
+                        onReady={() => {this.zweitePlayer.seekTo(parseFloat(this.state.zweitelink[0].startPlay))}} //set start time once it is ready
+                        url= {this.state.zweitelink[0].source}
+                        width='480px'
+                        height='270px'
+                        light={this.state.light}
+                        playing={this.state.zweitePlaying}
+                        volume={this.state.zweitelink[0].volume}
+                        loop = {this.state.loop}
+                        controls = {this.state.controls}
+                        />
+                    </div>}
+                </div>
+                <div className="making-row player-wrapper">
+                    {this.state.dreilink.length > 0 && 
+                    <div  className='react-player'>
+                        <div className="general-text text-center jedes-spieler-infor">
+                            <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.dreilink[0].spieler}`}}>{this.state.dreilink[0].spieler}</b> in {this.state.dreilink[0].ort}</div>
+                        <br />
+                        <ReactPlayer
+                        key={this.state.dreilink[0].source}
+                        className="player-itself"
+                        ref={dreiPlayer => (this.dreiPlayer = dreiPlayer)} //set this player ref
+                        onReady={() => {this.dreiPlayer.seekTo(parseFloat(this.state.dreilink[0].startPlay))}} //set start time once it is ready
+                        url= {this.state.dreilink[0].source}
+                        width='480px'
+                        height='270px'
+                        light={this.state.light}
+                        playing={this.state.dreiPlaying}
+                        volume={this.state.dreilink[0].volume}
+                        loop = {this.state.loop}
+                        controls = {this.state.controls}
+                        />
+                    </div>}
+                    {this.state.viertelink.length > 0 && 
+                    <div  className='react-player'>
+                        <div className="general-text text-center jedes-spieler-infor">
+                            <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.viertelink[0].spieler}`}}>{this.state.viertelink[0].spieler}</b> in {this.state.viertelink[0].ort}</div>
+                        <br />
+                        <ReactPlayer
+                        key={this.state.viertelink[0].source}
+                        className="player-itself"
+                        ref={viertePlayer => (this.viertePlayer = viertePlayer)} //set this player ref
+                        onReady={() => {this.viertePlayer.seekTo(parseFloat(this.state.viertelink[0].startPlay))}} //set start time once it is ready
+                        url= {this.state.viertelink[0].source}
+                        width='480px'
+                        height='270px'
+                        light={this.state.light}
+                        playing={this.state.viertePlaying}
+                        volume={this.state.viertelink[0].volume}
+                        loop = {this.state.loop}
+                        controls = {this.state.controls}
+                        />
+                    </div>}
                 </div>
                 <br />
                 <div className="making-row half-center-margin">
@@ -185,7 +239,7 @@ class TestPlayer extends Component {
                             <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                         </div>
                     </button>
-                    <button className="player-control" onClick={() => {this.setState({ playing: false })}}>| |</button>
+                    <button className="player-control" onClick={() => {this.setState({ erstePlaying: false, zweitePlaying: false, dreiPlaying: false, viertePlaying: false })}}>| |</button>
                     <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
                 </div>
                 <br />
@@ -391,7 +445,109 @@ class TestPlayer extends Component {
                                                         }}}>log-out</button>
                 </div>
                 </div>}
-            </body>
+            </body>}
+            {this.state.width < 911 && 
+            <body>
+            <div className="text-center title-jedes-collaboration general-text">{this.state.currentDB.konzertname}</div>
+            <div className="making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.currentDB.datenundzeit}</div>
+            <br />
+            <div className="making-column player-wrapper">
+                {this.state.erstelink.length > 0 && 
+                <div  className='react-player'>
+                    <div className="general-text text-center jedes-spieler-infor">
+                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.erstelink[0].spieler}`}}>{this.state.erstelink[0].spieler}</b> in {this.state.erstelink[0].ort}</div>
+                    <br />
+                    <ReactPlayer
+                    key={this.state.erstelink[0].source}
+                    className="player-itself"
+                    ref={erstePlayer => (this.erstePlayer = erstePlayer)} //set this player ref
+                    onReady={() => {this.erstePlayer.seekTo(parseFloat(this.state.erstelink[0].startPlay))}} //set start time once it is ready
+                    url= {this.state.erstelink[0].source}
+                    width='320px'
+                    height='240px'
+                    light={this.state.light}
+                    playing={this.state.erstePlaying}
+                    volume={this.state.erstelink[0].volume}
+                    loop = {this.state.loop}
+                    controls = {this.state.controls}
+                    />
+                </div>}
+                {this.state.zweitelink.length > 0 && 
+                <div  className='react-player'>
+                    <div className="general-text text-center jedes-spieler-infor">
+                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.zweitelink[0].spieler}`}}>{this.state.zweitelink[0].spieler}</b> in {this.state.zweitelink[0].ort}</div>
+                    <br />
+                    <ReactPlayer
+                    key={this.state.zweitelink[0].source}
+                    className="player-itself"
+                    ref={zweitePlayer => (this.zweitePlayer = zweitePlayer)} //set this player ref
+                    onReady={() => {this.zweitePlayer.seekTo(parseFloat(this.state.zweitelink[0].startPlay))}} //set start time once it is ready
+                    url= {this.state.zweitelink[0].source}
+                    width='320px'
+                    height='240px'
+                    light={this.state.light}
+                    playing={this.state.zweitePlaying}
+                    volume={this.state.zweitelink[0].volume}
+                    loop = {this.state.loop}
+                    controls = {this.state.controls}
+                    />
+                </div>}
+            </div>
+            <div className="making-column player-wrapper">
+                {this.state.dreilink.length > 0 && 
+                <div  className='react-player'>
+                    <div className="general-text text-center jedes-spieler-infor">
+                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.dreilink[0].spieler}`}}>{this.state.dreilink[0].spieler}</b> in {this.state.dreilink[0].ort}</div>
+                    <br />
+                    <ReactPlayer
+                    key={this.state.dreilink[0].source}
+                    className="player-itself"
+                    ref={dreiPlayer => (this.dreiPlayer = dreiPlayer)} //set this player ref
+                    onReady={() => {this.dreiPlayer.seekTo(parseFloat(this.state.dreilink[0].startPlay))}} //set start time once it is ready
+                    url= {this.state.dreilink[0].source}
+                    width='320px'
+                    height='240px'
+                    light={this.state.light}
+                    playing={this.state.dreiPlaying}
+                    volume={this.state.dreilink[0].volume}
+                    loop = {this.state.loop}
+                    controls = {this.state.controls}
+                    />
+                </div>}
+                {this.state.viertelink.length > 0 && 
+                <div  className='react-player'>
+                    <div className="general-text text-center jedes-spieler-infor">
+                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.viertelink[0].spieler}`}}>{this.state.viertelink[0].spieler}</b> in {this.state.viertelink[0].ort}</div>
+                    <br />
+                    <ReactPlayer
+                    key={this.state.viertelink[0].source}
+                    className="player-itself"
+                    ref={viertePlayer => (this.viertePlayer = viertePlayer)} //set this player ref
+                    onReady={() => {this.viertePlayer.seekTo(parseFloat(this.state.viertelink[0].startPlay))}} //set start time once it is ready
+                    url= {this.state.viertelink[0].source}
+                    width='320px'
+                    height='240px'
+                    light={this.state.light}
+                    playing={this.state.viertePlaying}
+                    volume={this.state.viertelink[0].volume}
+                    loop = {this.state.loop}
+                    controls = {this.state.controls}
+                    />
+                </div>}
+            </div>
+            <br />
+            <div className="making-column half-center-margin">
+                <button className="player-control" onClick={() => {this.spielerZählen()}}>
+                    <div className="making-column spieler-symble">
+                        ▷
+                        <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
+                    </div>
+                </button>
+                <button className="player-control" onClick={() => {this.setState({ erstePlaying: false, zweitePlaying: false, dreiPlaying: false, viertePlaying: false })}}>| |</button>
+                <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
+            </div>
+            </body>}
+            </div>
         );
     }
 }

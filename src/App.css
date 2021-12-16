@@ -2,39 +2,13 @@
   width: 90%;
   margin: auto;
 }
-.text, .title {
-  font-size: 17px;
-  color: rgb(77, 17, 17);
-  margin-bottom: 0ch; 
+.title-row {
+  display: flex;
+  flex-direction: row;
 }
-.title {
-  font-family: serif;
-  font-weight: 300;
-  margin-top: 17px; 
-}
-.text-pointer {
-    cursor: pointer;
-}
-.text-pointer:hover {
-    color: rgba(77, 17, 17);
-}
-.text-center {
-  text-align: center;
-}
-.making-row {
-    display: flex;
-    flex-direction: row;
-}
-.separate-two-side {
-    justify-content: space-between
-}
-
-
 .width-option {
-  margin-top: 17px;
   width: 51px;
 }
-
 .boden-text {
   margin: 0 auto;
   width: 51%;
@@ -49,3 +23,58 @@
 .boden-linie-height {
   height: 31px;
 }
+
+@media screen 
+and (min-device-width: 911px) {
+  .text, .title {
+    font-size: 17px;
+    color: rgb(77, 17, 17);
+    margin-bottom: 0ch; 
+    margin-top: 17px; 
+  }
+  .title {
+    font-family: serif;
+    font-weight: 300;
+  }
+}
+@media screen 
+and (max-device-width: 900px) {
+  .text, .title {
+    font-size: 11px;
+    color: rgb(77, 17, 17);
+    margin-bottom: 0ch; 
+    border: 1px solid burlywood;
+    border-radius: 3px;
+    text-align: center;
+    margin-top: 17px;
+  }
+  .title {
+    font-family: serif;
+    font-weight: 300;
+    padding: 1px;
+  }
+}
+
+
+.text-pointer {
+    cursor: pointer;
+}
+.text-pointer:hover {
+    color: rgba(77, 17, 17);
+}
+.text-center {
+  text-align: center;
+}
+.separate-two-side {
+    justify-content: space-between
+}
+.making-row {
+  display: flex;
+  flex-direction: row;
+}
+.making-column {
+  display: flex;
+  flex-direction: column;
+}
+
+
