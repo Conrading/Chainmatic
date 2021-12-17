@@ -4,21 +4,27 @@ and (min-device-width: 911px) {
     margin-top: 17px;
     font-size: 27px;
   }
+  .general-text {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+  }
   .player-wrapper { 
-      position: relative;
-      float: inherit;
-      margin: 0 auto;
-      align-content: center;
-      justify-content: center;
-      width: 71%;
-      height: 100%;
+    position: relative;
+    float: inherit;
+    margin: 0 auto;
+    align-content: center;
+    justify-content: center;
+    width: 71%;
+    height: 100%;
   }
   .react-player {
-      position: relative;
-      float: inherit;
-      padding: 5px;
-      width: 100%;
-      height: 100%;
+    position: relative;
+    float: inherit;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
   }
   .player-itself {
     position: relative;
@@ -44,12 +50,6 @@ and (min-device-width: 911px) {
   }
   .half-center-margin {
     margin-left: 32%;
-  }
-  .general-text {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
   }
   .jedes-spieler-infor {
     border-radius: 3px;
@@ -75,26 +75,40 @@ and (max-device-width: 900px) {
     margin-top: 7px;
     font-size: 17px;
   }
+  .general-text {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #2c3e50;
+  }
   .player-wrapper { 
-      position: relative;
-      float: inherit;
-      margin: 0 auto;
-      align-content: center;
-      justify-content: center;
-      width: 71%;
-      height: 100%;
+    position: relative;
+    float: inherit;
+    margin: 0 auto;
+    align-content: center;
+    justify-content: center;
+    width: 71%;
+    height: 100%;
   }
   .react-player {
-      position: relative;
-      float: inherit;
-      padding: 5px;
-      width: 100%;
-      height: 100%;
+    position: relative;
+    float: inherit;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+  }
+  .center-player {
+    margin: 0 auto;
   }
   .player-itself {
     position: relative;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  .play-control-center-margin {
+    margin: 0 auto;
   }
   .player-control {
     margin: 5px;
@@ -113,20 +127,11 @@ and (max-device-width: 900px) {
     align-content: center;
     justify-content: center;
   }
-  .half-center-margin {
-    margin-left: 32%;
-  }
-  .general-text {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-  }
   .jedes-spieler-infor {
     border-radius: 3px;
     height: 31px;
     width: auto;
-    padding-top: 11px;
+    padding: 7px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
   }
   

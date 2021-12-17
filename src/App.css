@@ -9,20 +9,6 @@
 .width-option {
   width: 51px;
 }
-.boden-text {
-  margin: 0 auto;
-  width: 51%;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  color: darkkhaki;
-}
-.boden-linie {
-  margin-top: 31px;
-  margin-bottom: 17px;
-  border-top: 1px solid darkgray;
-}
-.boden-linie-height {
-  height: 31px;
-}
 
 @media screen 
 and (min-device-width: 911px) {
@@ -35,6 +21,20 @@ and (min-device-width: 911px) {
   .title {
     font-family: serif;
     font-weight: 300;
+  }
+  .boden-text {
+    margin: 0 auto;
+    width: 51%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: darkkhaki;
+  }
+  .boden-linie {
+    margin-top: 31px;
+    margin-bottom: 17px;
+    border-top: 1px solid darkgray;
+  }
+  .boden-linie-height {
+    height: 31px;
   }
 }
 @media screen 
@@ -53,6 +53,21 @@ and (max-device-width: 900px) {
     font-weight: 300;
     padding: 1px;
   }
+  .boden-text {
+    margin: 0 auto;
+    margin-bottom: 17px;
+    width: 91%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 11px;
+    color: darkkhaki;
+  }
+  .boden-linie {
+    margin-bottom: 17px;
+    border-top: 1px solid darkgray;
+  }
+  .boden-linie-height {
+    height: 31px;
+  }
 }
 
 
@@ -65,6 +80,11 @@ and (max-device-width: 900px) {
 .text-center {
   text-align: center;
 }
+.text-trademakr-infor {
+    color: #3d5770;
+    font-family: Courier New;
+}
+
 .separate-two-side {
     justify-content: space-between
 }

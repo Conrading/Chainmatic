@@ -448,15 +448,15 @@ class TestPlayer extends Component {
             </body>}
             {this.state.width < 911 && 
             <body>
-            <div className="text-center title-jedes-collaboration general-text">{this.state.currentDB.konzertname}</div>
-            <div className="making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.currentDB.datenundzeit}</div>
+            <div className="text-center title-jedes-collaboration">{this.state.currentDB.konzertname}</div>
+            <div className="text-center making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.currentDB.datenundzeit}</div>
             <br />
             <div className="making-column player-wrapper">
                 {this.state.erstelink.length > 0 && 
                 <div  className='react-player'>
-                    <div className="general-text text-center jedes-spieler-infor">
+                    <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.erstelink[0].spieler}`}}>{this.state.erstelink[0].spieler}</b> in {this.state.erstelink[0].ort}</div>
-                    <br />
+                    <div className="center-player">
                     <ReactPlayer
                     key={this.state.erstelink[0].source}
                     className="player-itself"
@@ -471,12 +471,13 @@ class TestPlayer extends Component {
                     loop = {this.state.loop}
                     controls = {this.state.controls}
                     />
+                    </div>
                 </div>}
                 {this.state.zweitelink.length > 0 && 
                 <div  className='react-player'>
-                    <div className="general-text text-center jedes-spieler-infor">
+                    <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.zweitelink[0].spieler}`}}>{this.state.zweitelink[0].spieler}</b> in {this.state.zweitelink[0].ort}</div>
-                    <br />
+                    <div className="center-player">
                     <ReactPlayer
                     key={this.state.zweitelink[0].source}
                     className="player-itself"
@@ -491,14 +492,15 @@ class TestPlayer extends Component {
                     loop = {this.state.loop}
                     controls = {this.state.controls}
                     />
+                    </div>
                 </div>}
             </div>
             <div className="making-column player-wrapper">
                 {this.state.dreilink.length > 0 && 
                 <div  className='react-player'>
-                    <div className="general-text text-center jedes-spieler-infor">
+                    <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.dreilink[0].spieler}`}}>{this.state.dreilink[0].spieler}</b> in {this.state.dreilink[0].ort}</div>
-                    <br />
+                    <div className="center-player">
                     <ReactPlayer
                     key={this.state.dreilink[0].source}
                     className="player-itself"
@@ -513,12 +515,13 @@ class TestPlayer extends Component {
                     loop = {this.state.loop}
                     controls = {this.state.controls}
                     />
+                    </div>
                 </div>}
                 {this.state.viertelink.length > 0 && 
                 <div  className='react-player'>
-                    <div className="general-text text-center jedes-spieler-infor">
+                    <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.viertelink[0].spieler}`}}>{this.state.viertelink[0].spieler}</b> in {this.state.viertelink[0].ort}</div>
-                    <br />
+                    <div className="center-player">
                     <ReactPlayer
                     key={this.state.viertelink[0].source}
                     className="player-itself"
@@ -533,12 +536,13 @@ class TestPlayer extends Component {
                     loop = {this.state.loop}
                     controls = {this.state.controls}
                     />
+                    </div>
                 </div>}
             </div>
             <br />
-            <div className="making-column half-center-margin">
+            <div className="making-row play-control-center-margin">
                 <button className="player-control" onClick={() => {this.spielerZählen()}}>
-                    <div className="making-column spieler-symble">
+                    <div className="making-row spieler-symble">
                         ▷
                         <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                     </div>
