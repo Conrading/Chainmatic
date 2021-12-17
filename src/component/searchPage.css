@@ -12,11 +12,6 @@
     margin-left: 3px;
     margin-top: 3px;
 }
-.player-itself {
-    position: relative;
-    margin: auto;
-    padding: 5px;
-}
 .container {
     padding: 2px;
 }
@@ -53,12 +48,6 @@
 .text-row-height {
     height: 37px;
 }
-.text-pointer {
-    cursor: pointer;
-}
-.text-pointer:hover {
-    color: rgba(77, 17, 17);
-}
 
 .searchbar {
     margin: 0 auto;
@@ -68,47 +57,64 @@
 .searchbar-input {
     display: flex;
 }
-.input-project {
-    border-radius: 5px;
-    border: 1px solid rgb(189, 129, 121);
-    box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
-    padding: 3px;
-    width: 210px;
-}
 .searchbar-button {
     align-content: center;
     justify-content: center;
     display: flex;
 }
 
+@media screen 
+and (min-device-width: 911px)  {
+    .input-project {
+        border-radius: 5px;
+        border: 1px solid rgb(189, 129, 121);
+        box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
+        padding: 3px;
+        width: 210px;
+    }
+    button.search {
+        margin: 5px;
+        border-radius: 5px;
+        font-size: 13px;
+        width: 71px;
+        height: 31px;
+        background-color: aliceblue;
+    }
+}
+@media screen 
+and (max-device-width: 900px) {
+    .input-project {
+        border-radius: 3px;
+        border: 1px solid rgb(189, 129, 121);
+        box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
+        padding: 1px;
+        height: 31px;
+        width: 210px;
+    }
+    button.search {
+        margin: 5px;
+        border-radius: 3px;
+        font-size: 11px;
+        padding: 3px;
+        width: 51px;
+        height: 21px;
+        background-color: aliceblue;
+    }
+}
 
-button {
-    max-width: 100%;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-bottom: 7px;
-    margin-left: 50%;
-    font-weight: 300;
-    border: 1px solid rgb(189, 129, 121);
+.table-video-column {
+    width: 31%;
 }
-button:hover {
-    border: 2px solid rgb(189, 129, 121);
-    box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
-    color: rgba(77, 17, 17);
-    font-weight: 500;
+.phone-list-text {
+    color: #3d5770;
+    font-family: Courier New;
+    font-size: 11px;
+    width: auto;
+    height: auto;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-button:active {
-    border: 2px solid rgb(189, 129, 121);
-    color: rgba(77, 17, 17);
-    transform: translateY(2px);
-}
-button.search {
-    margin: 5px;
-    border-radius: 5px;
-    font-size: 13px;
-    width: 71px;
-    height: 31px;
-    background-color: aliceblue;
-}
-
 

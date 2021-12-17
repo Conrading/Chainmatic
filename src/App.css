@@ -97,4 +97,24 @@ and (max-device-width: 900px) {
   flex-direction: column;
 }
 
+button {
+  max-width: 100%;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-bottom: 7px;
+  margin-left: 50%;
+  font-weight: 300;
+  border: 1px solid rgb(189, 129, 121);
+}
+button:hover {
+  border: 2px solid rgb(189, 129, 121);
+  box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
+  color: rgba(77, 17, 17);
+  font-weight: 500;
+}
+button:active {
+  border: 2px solid rgb(189, 129, 121);
+  color: rgba(77, 17, 17);
+  transform: translateY(2px);
+}
 

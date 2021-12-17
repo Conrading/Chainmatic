@@ -16,19 +16,28 @@ class Hauptsächlich extends Component {
                 "firstLine": [],
                 "secondLine": [],
                 "thridLine": [],
-                "vierLine": []
-            } 
+                "vierLine": [],
+                "defualtPage": []
+            } ,
+            width: window.innerWidth,
         }
-        //sort out how to present data
         this.sortOutData = this.sortOutData.bind(this) //sort out the data user wants to present
-        this.resetAll = this.resetAll.bind(this) //reset variable after sort data
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this) //switch to cellphone
     }
     componentDidMount () {
-        //show data without log-in
         http.get("/hauptsachlich").then(res => {
             this.setState({ importDefualtList: res.data })
         }) 
     }
+    componentWillMount() {
+      window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+    handleWindowSizeChange () {
+      this.setState({ width: window.innerWidth });
+    };
     sortOutData () {
         //lower case of applicant
         if (this.state.projectSearch == null) {
@@ -36,7 +45,6 @@ class Hauptsächlich extends Component {
         } else { 
             this.setState({ searchResult: null })
         }
-        //submit the data sort out critaria
         http.post("/searchPerformance", {search: this.state.projectSearch.replace(/\W+/g, '-').toLowerCase()}).then((res) => {
            if (res.data.negative === "empty") {
                this.setState({ searchResult: "Search no result" })
@@ -46,9 +54,6 @@ class Hauptsächlich extends Component {
                 this.setState({ importDefualtList: res.data })
             } 
         })
-    }
-    resetAll () {
-        //set several variable to defualt
     }
     render () {
         let erstenCard = this.state.importDefualtList.firstLine.map( i => {
@@ -163,21 +168,44 @@ class Hauptsächlich extends Component {
                 </div>
             )
         })
+        let phonePageList = this.state.importDefualtList.defualtPage.map( i => {
+            let title = i.konzertname
+            if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
+            return (
+                <div className="making-row">
+                    <div className="table-video-column">
+                        <ReactPlayer
+                            key={i.erstespieler}
+                            className="player-itself"
+                            url= {i.erstelink}
+                            width='79px'
+                            height='59px'
+                            light={true}
+                            controls = {true}
+                            />
+                    </div>
+                    <div className="phone-list-text text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}>{title}</div>
+                </div>
+            )
+        })
         return (
-            <div>
+            <body>
                 <div className="searchbar">
                     <div className="searchbar-input"><input className="input-project" type="text" onChange={(e) => {this.setState({projectSearch: e.target.value})}}/></div>
                     <div className="searchbar-button" ><button className="search" onClick={() => {this.sortOutData()}}>Search</button></div>
                 </div>
                 {this.state.searchResult !== null && <div><br /><div className="text-center">{this.state.searchResult}</div></div>}
                 <br />
+                {this.state.width > 911 &&
                 <div className="making-row center-by-margin">
                     <div className="width-column">{erstenCard}</div>
                     <div className="width-column">{zweitenCard}</div>
                     <div className="width-column">{dreiCard}</div>
                     <div className="width-column">{vierCard}</div>
-                </div>
-            </div>
+                </div>}
+                {this.state.width < 911 &&
+                <div>{phonePageList}</div>}
+            </body>
         )
     }
 }
