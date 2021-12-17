@@ -540,16 +540,16 @@ class TestPlayer extends Component {
                 </div>}
             </div>
             <br />
-            <div className="making-row play-control-center-margin">
-                <button className="player-control" onClick={() => {this.spielerZählen()}}>
-                    <div className="making-row spieler-symble">
-                        ▷
-                        <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
-                    </div>
-                </button>
-                <button className="player-control" onClick={() => {this.setState({ erstePlaying: false, zweitePlaying: false, dreiPlaying: false, viertePlaying: false })}}>| |</button>
-                <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
-            </div>
+                <div className="making-row play-control-center-margin">
+                    <button className="player-control" onClick={() => {this.spielerZählen()}}>
+                        <div className="making-row spieler-symble">
+                            ▷
+                            <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
+                        </div>
+                    </button>
+                    <button className="player-control" onClick={() => {this.setState({ erstePlaying: false, zweitePlaying: false, dreiPlaying: false, viertePlaying: false })}}>| |</button>
+                    <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
+                </div>
             </body>}
             </div>
         );
