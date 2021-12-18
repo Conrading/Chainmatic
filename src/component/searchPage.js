@@ -39,7 +39,6 @@ class Hauptsächlich extends Component {
       this.setState({ width: window.innerWidth });
     };
     sortOutData () {
-        //lower case of applicant
         if (this.state.projectSearch == null) {
             this.setState({ searchResult: "Please input something before search" })
         } else { 

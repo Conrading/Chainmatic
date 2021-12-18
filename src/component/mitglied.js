@@ -15,10 +15,12 @@ class Mitglied extends Component {
             follower: null,
             importDefualtList: null,
 
-            followerStatus: false
+            followerStatus: false,
+            width: window.innerWidth,
         }
         this.abmeldung = this.abmeldung.bind(this)
         this.hinzufugenAnhänger = this.hinzufugenAnhänger.bind(this)
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this) //switch to cellphone
     }
     componentDidMount () {
         http.post(`/mitglied/id=${this.props.match.params.kontoname}`, {"user": localStorage.getItem('user')}).then((res) => {
@@ -32,6 +34,15 @@ class Mitglied extends Component {
             if (res.data.followerStatus === 0) { this.setState({ followerStatus: false })} else {this.setState({ followerStatus: true })}
         })
     }
+    componentWillMount() {
+      window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+    handleWindowSizeChange () {
+      this.setState({ width: window.innerWidth });
+    };
     hinzufugenAnhänger () {
         http.post('/hinzufugenanhanger', {"follower": localStorage.getItem('user'), "player": this.props.match.params.kontoname}).then((res) => {
             if (res.data.status === "fail") {
@@ -47,10 +58,11 @@ class Mitglied extends Component {
         }
     }
     render () {
-        let erstenCard = null
-        let zweitenCard = null
-        let dreiCard = null
-        let vierCard = null
+        let erstenCard = []
+        let zweitenCard = []
+        let dreiCard = []
+        let vierCard = []
+        let phonePageList = []
         if (this.state.importDefualtList !== null) {
             erstenCard = this.state.importDefualtList.firstLine.map( i => {
                 let title = i.konzertname
@@ -164,10 +176,32 @@ class Mitglied extends Component {
                     </div>
                 )
             })
+            phonePageList = this.state.importDefualtList.defualtPage.map( i => {
+                let title = i.konzertname
+                if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
+                return (
+                    <div className="making-row">
+                        <div className="table-video-column">
+                            <ReactPlayer
+                                key={i.erstespieler}
+                                className="player-itself"
+                                url= {i.erstelink}
+                                width='79px'
+                                height='59px'
+                                light={true}
+                                controls = {true}
+                                />
+                        </div>
+                        <div className="phone-list-text text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}>{title}</div>
+                    </div>
+                )
+            })
         }
         return (
             <body>
             <br />
+            {this.state.width > 911 &&
+            <div>
             <div className="personal-upper">
                 <div className="photo-area">
                     {this.state.bildung === null && <div><img top height="100px" width="100px" class="center"
@@ -210,6 +244,47 @@ class Mitglied extends Component {
                 <div className="width-column">{dreiCard}</div>
                 <div className="width-column">{vierCard}</div>
             </div>
+            </div>}
+            {this.state.width < 911 &&
+            <div>
+            <div  className="personal-upper">
+                <div className="photo-area">
+                    {this.state.bildung === null && <div><img top height="51px" width="51px" class="center"
+                        src="https://miro.medium.com/max/1400/1*N5w9Ay0VlQBKF4b11C0LdQ.png"
+                        alt="no account image" /></div>}
+                    {this.state.bildung !== null && <div><img top height="51px" width="51px" class="center"
+                        src={this.state.bildung}
+                        alt="no account image" /></div>}
+                </div>
+                <div >
+                    <div className="personal-left-gap making-row personal-upper-right-gap">
+                        {localStorage.getItem('user') === null && <b>{this.props.match.params.kontoname.toUpperCase()}</b>}
+                        {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && <b>{this.props.match.params.kontoname.toUpperCase()}</b>}
+                        {localStorage.getItem('user') !== null && localStorage.getItem('user') === this.props.match.params.kontoname &&
+                        <div className="text-pointer" onClick={() => {window.location = `/mitgliedbearbeiten/id=${localStorage.getItem('user')}`}}>
+                            <b>{localStorage.getItem('user').toUpperCase()}</b>
+                        </div>}
+                        {localStorage.getItem('user') !== null && localStorage.getItem('user') === this.props.match.params.kontoname &&
+                        <div className="text-pointer logout-text" onClick={() => {this.abmeldung()}}>Log-Out</div>}
+                        {this.state.verified === true && 
+                        <div className="making-row"><img top height="15px" width="15px" class="center"
+                        src="https://www.myusfra.org/images/1.3_1.png"
+                        alt="no verified image" /><b>verified!</b></div>}
+                    </div>
+                    <div className="personal-left-gap making-row personal-upper-right-gap-second">
+                        <div>in {this.state.ort} |</div>
+                        <div><div className="follower-text">{this.state.follower} Followers</div></div>
+                        {localStorage.getItem('user') !== null && localStorage.getItem('user') !== this.props.match.params.kontoname && 
+                        <div className="text-pointer follow-tab" onClick={() => {this.hinzufugenAnhänger()}}>
+                            {this.state.followerStatus === false && <b>Following</b>}
+                            {this.state.followerStatus === true && <b>unFollow</b>}
+                        </div>}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div>{phonePageList}</div>
+            </div>}
             </body>
         )
     }
