@@ -19,11 +19,12 @@ class TestPlayer extends Component {
 
             //other player setting
             controls: true,
-            light: true,
             muted: false,
             loop: false,
 
             spielerZahlen: "",
+
+            iphoneLimit: false,
 
             editorVersion: false,
             width: window.innerWidth,
@@ -129,15 +130,19 @@ class TestPlayer extends Component {
         })
     }
     spielerZählen () {
-        this.setState({ light: false })
-        this.setState({ erstePlaying: true, zweitePlaying: true, dreiPlaying: true, viertePlaying: true })
-        http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
-            if (res.data.state === "fail") {
-                this.setState({ currentDB: {"konzertname": "System Failure!"}})
-            } else {
-                this.setState({ spielerZahlen: res.data.numer })
-            }
-        })
+        if(navigator.userAgent.toLowerCase().indexOf("iphone") !== -1) {
+            this.setState({ iphoneLimit: true })
+        } else { 
+            this.setState({ iphoneLimit: false })
+            this.setState({ erstePlaying: true, zweitePlaying: true, dreiPlaying: true, viertePlaying: true })
+            http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
+                if (res.data.state === "fail") {
+                    this.setState({ currentDB: {"konzertname": "System Failure!"}})
+                } else {
+                    this.setState({ spielerZahlen: res.data.numer })
+                }
+            })
+        }
     }
     render() {
         return (
@@ -153,6 +158,7 @@ class TestPlayer extends Component {
                         <div className="general-text text-center jedes-spieler-infor">
                             <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.erstelink[0].spieler}`}}>{this.state.erstelink[0].spieler}</b> in {this.state.erstelink[0].ort}</div>
                         <br />
+                        {this.state.iphoneLimit === true && <div>now ihpone?</div>}
                         <ReactPlayer
                         key={this.state.erstelink[0].source}
                         className="player-itself"
@@ -161,7 +167,6 @@ class TestPlayer extends Component {
                         url= {this.state.erstelink[0].source}
                         width='480px'
                         height='270px'
-                        light={this.state.light}
                         playing={this.state.erstePlaying}
                         volume={this.state.erstelink[0].volume}
                         loop = {this.state.loop}
@@ -181,7 +186,6 @@ class TestPlayer extends Component {
                         url= {this.state.zweitelink[0].source}
                         width='480px'
                         height='270px'
-                        light={this.state.light}
                         playing={this.state.zweitePlaying}
                         volume={this.state.zweitelink[0].volume}
                         loop = {this.state.loop}
@@ -203,7 +207,6 @@ class TestPlayer extends Component {
                         url= {this.state.dreilink[0].source}
                         width='480px'
                         height='270px'
-                        light={this.state.light}
                         playing={this.state.dreiPlaying}
                         volume={this.state.dreilink[0].volume}
                         loop = {this.state.loop}
@@ -223,7 +226,6 @@ class TestPlayer extends Component {
                         url= {this.state.viertelink[0].source}
                         width='480px'
                         height='270px'
-                        light={this.state.light}
                         playing={this.state.viertePlaying}
                         volume={this.state.viertelink[0].volume}
                         loop = {this.state.loop}
@@ -451,8 +453,12 @@ class TestPlayer extends Component {
             <div className="text-center title-jedes-collaboration">{this.state.currentDB.konzertname}</div>
             <div className="text-center making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.currentDB.datenundzeit}</div>
             <br />
+            {this.state.iphoneLimit === true && 
+            <video width="320" height="240" autoplay controls>
+                <source src="/video/mobile_guitar_low.mp4"></source>
+            </video>}
             <div className="making-column player-wrapper">
-                {this.state.erstelink.length > 0 && 
+                {this.state.erstelink.length > 0 && this.state.iphoneLimit === false &&
                 <div  className='react-player'>
                     <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.erstelink[0].spieler}`}}>{this.state.erstelink[0].spieler}</b> in {this.state.erstelink[0].ort}</div>
@@ -465,7 +471,6 @@ class TestPlayer extends Component {
                     url= {this.state.erstelink[0].source}
                     width='320px'
                     height='240px'
-                    light={this.state.light}
                     playing={this.state.erstePlaying}
                     volume={this.state.erstelink[0].volume}
                     loop = {this.state.loop}
@@ -473,7 +478,7 @@ class TestPlayer extends Component {
                     />
                     </div>
                 </div>}
-                {this.state.zweitelink.length > 0 && 
+                {this.state.zweitelink.length > 0 && this.state.iphoneLimit === false &&
                 <div  className='react-player'>
                     <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.zweitelink[0].spieler}`}}>{this.state.zweitelink[0].spieler}</b> in {this.state.zweitelink[0].ort}</div>
@@ -486,7 +491,6 @@ class TestPlayer extends Component {
                     url= {this.state.zweitelink[0].source}
                     width='320px'
                     height='240px'
-                    light={this.state.light}
                     playing={this.state.zweitePlaying}
                     volume={this.state.zweitelink[0].volume}
                     loop = {this.state.loop}
@@ -496,7 +500,7 @@ class TestPlayer extends Component {
                 </div>}
             </div>
             <div className="making-column player-wrapper">
-                {this.state.dreilink.length > 0 && 
+                {this.state.dreilink.length > 0 && this.state.iphoneLimit === false &&
                 <div  className='react-player'>
                     <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.dreilink[0].spieler}`}}>{this.state.dreilink[0].spieler}</b> in {this.state.dreilink[0].ort}</div>
@@ -509,7 +513,6 @@ class TestPlayer extends Component {
                     url= {this.state.dreilink[0].source}
                     width='320px'
                     height='240px'
-                    light={this.state.light}
                     playing={this.state.dreiPlaying}
                     volume={this.state.dreilink[0].volume}
                     loop = {this.state.loop}
@@ -517,7 +520,7 @@ class TestPlayer extends Component {
                     />
                     </div>
                 </div>}
-                {this.state.viertelink.length > 0 && 
+                {this.state.viertelink.length > 0 && this.state.iphoneLimit === false &&
                 <div  className='react-player'>
                     <div className="text-trademakr-infor text-center jedes-spieler-infor">
                         <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${this.state.viertelink[0].spieler}`}}>{this.state.viertelink[0].spieler}</b> in {this.state.viertelink[0].ort}</div>
@@ -530,7 +533,6 @@ class TestPlayer extends Component {
                     url= {this.state.viertelink[0].source}
                     width='320px'
                     height='240px'
-                    light={this.state.light}
                     playing={this.state.viertePlaying}
                     volume={this.state.viertelink[0].volume}
                     loop = {this.state.loop}
@@ -541,13 +543,18 @@ class TestPlayer extends Component {
             </div>
             <br />
                 <div className="making-row play-control-center-margin">
-                    <button className="player-control" onClick={() => {this.spielerZählen()}}>
+                    {this.state.iphoneLimit === false && <button className="player-control" onClick={() => {this.spielerZählen()}}>
                         <div className="making-row spieler-symble">
                             ▷
                             <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                         </div>
-                    </button>
-                    <button className="player-control" onClick={() => {this.setState({ erstePlaying: false, zweitePlaying: false, dreiPlaying: false, viertePlaying: false })}}>| |</button>
+                    </button>}
+                    {this.state.iphoneLimit === false && <button className="player-control" 
+                        onClick={() => {this.setState({ 
+                            erstePlaying: false, 
+                            zweitePlaying: false, 
+                            dreiPlaying: false, 
+                            viertePlaying: false })}}>| |</button>}
                     <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
                 </div>
             </body>}
