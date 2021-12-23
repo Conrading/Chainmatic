@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 /backup
-/public/storage
+/public/video
 /.pnp
 .pnp.js
 /src/component/http-axios.js
