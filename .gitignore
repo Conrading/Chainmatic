@@ -3,10 +3,10 @@
 # dependencies
 /node_modules
 /backup
-/public
+/public/video
 /.pnp
 .pnp.js
-/src/component/http-axios.js
+src/component/http-axios.js
 
 # testing
 /coverage
