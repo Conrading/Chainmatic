@@ -6,7 +6,6 @@
 /public/video
 /.pnp
 .pnp.js
-src/component/http-axios.js
 
 # testing
 /coverage

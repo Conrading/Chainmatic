@@ -35,6 +35,11 @@ class TestPlayer extends Component {
         this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this) //switch to cellphone
     }
     componentDidMount () {
+        if(navigator.userAgent.toLowerCase().indexOf("iphone") !== -1) {
+            this.setState({ iphoneLimit: true })
+        } else { 
+            this.setState({ iphoneLimit: false })
+        }
         http.get(`/jedes/id=${this.props.match.params.jedesVideoSpieler}`).then(res => {
             this.setState({ currentDB: res.data.callOutCollaboration, spielerZahlen: res.data.spielerzahlen.count })
             if (this.state.currentDB.erstelink !== null) {
@@ -130,19 +135,14 @@ class TestPlayer extends Component {
         })
     }
     spielerZählen () {
-        if(navigator.userAgent.toLowerCase().indexOf("iphone") !== -1) {
-            this.setState({ iphoneLimit: true })
-        } else { 
-            this.setState({ iphoneLimit: false })
-            this.setState({ erstePlaying: true, zweitePlaying: true, dreiPlaying: true, viertePlaying: true })
-            http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
-                if (res.data.state === "fail") {
-                    this.setState({ currentDB: {"konzertname": "System Failure!"}})
-                } else {
-                    this.setState({ spielerZahlen: res.data.numer })
-                }
-            })
-        }
+        this.setState({ erstePlaying: true, zweitePlaying: true, dreiPlaying: true, viertePlaying: true })
+        http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
+            if (res.data.state === "fail") {
+                this.setState({ currentDB: {"konzertname": "System Failure!"}})
+            } else {
+                this.setState({ spielerZahlen: res.data.numer })
+            }
+        })
     }
     render() {
         return (
@@ -455,7 +455,7 @@ class TestPlayer extends Component {
             <br />
             {this.state.iphoneLimit === true && 
             <video width="320" height="240" autoplay controls>
-                <source src="/video/mobile_guitar_low.mp4"></source>
+                <source src="https://www.youtube.com/watch?v=HpmL7dvyRUY"></source>
             </video>}
             <div className="making-column player-wrapper">
                 {this.state.erstelink.length > 0 && this.state.iphoneLimit === false &&
