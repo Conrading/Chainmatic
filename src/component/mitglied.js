@@ -13,7 +13,7 @@ class Mitglied extends Component {
             bildung: null,
             ort: null,
             follower: null,
-            importDefualtList: null,
+            importDefualtList: [],
 
             followerStatus: false,
             width: window.innerWidth,
@@ -29,7 +29,7 @@ class Mitglied extends Component {
                 bildung: res.data.kontodaten.bildung,
                 ort: res.data.kontodaten.ort,
                 follower: res.data.followers,
-                importDefualtList: res.data
+                importDefualtList: res.data.vollList
             })
             if (res.data.followerStatus === 0) { this.setState({ followerStatus: false })} else {this.setState({ followerStatus: true })}
         })
@@ -58,145 +58,54 @@ class Mitglied extends Component {
         }
     }
     render () {
-        let erstenCard = []
-        let zweitenCard = []
-        let dreiCard = []
-        let vierCard = []
-        let phonePageList = []
-        if (this.state.importDefualtList !== null) {
-            erstenCard = this.state.importDefualtList.firstLine.map( i => {
-                let title = i.konzertname
-                if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
-                return (
-                    <div className='card-project'>
-                        <div className='up-gap'>
-                            <ReactPlayer
-                                key={i.erstespieler}
-                                className="player-itself"
-                                url= {i.erstelink}
-                                width='271px'
-                                height='150px'
-                                light={this.state.light}
-                                controls = 'true'
-                                />
+        let jedesInterpret = this.state.importDefualtList.map( i => {
+            let title = i.jedesleistung.konzertname
+            if (i.jedesleistung.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
+            return (
+                <div className='card-project'>
+                    <div className='up-gap'>
+                        <ReactPlayer
+                            key={i.jedesteilnehmen[0].jedesspieler}
+                            className="player-itself"
+                            url= {i.jedesteilnehmen[0].jedeslink}
+                            width='271px'
+                            height='150px'
+                            light={this.state.light}
+                            controls = 'true'
+                            />
+                    </div>
+                    <div className="limit-width-sieben"><hr /></div>
+                    <div className="container">
+                        <div className="making-row text-row-height">
+                            <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.jedesleistung.spielernumer}`}}><b>{title}</b></div>
                         </div>
-                        <div className="limit-width-sieben"><hr /></div>
-                        <div className="container">
-                            <div className="making-row text-row-height">
-                                <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
-                            </div>
-                            <div className="zweite-infor">
-                                <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
-                            </div>
+                        <div className="zweite-infor">
+                            <div className="text-left-gap" >Debut: {i.jedesleistung.datenundzeit}</div>
                         </div>
                     </div>
-                )
-            })
-            zweitenCard = this.state.importDefualtList.secondLine.map( i => {
-                let title = i.konzertname
-                if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
-                return (
-                    <div className='card-project'>
-                        <div className='up-gap'>
-                            <ReactPlayer
-                                key={i.erstespieler}
-                                className="player-itself"
-                                url= {i.erstelink}
-                                width='271px'
-                                height='150px'
-                                light={this.state.light}
-                                controls = 'true'
-                                />
-                        </div>
-                        <div className="limit-width-sieben"><hr /></div>
-                        <div className="container">
-                            <div className="making-row text-row-height">
-                                <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
-                            </div>
-                            <div className="zweite-infor">
-                                <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
-                            </div>
-                        </div>
+                </div>
+            )
+        })
+        let phonePageList = this.state.importDefualtList.map( i => {
+            let title = i.jedesleistung.konzertname
+            if (i.jedesleistung.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
+            return (
+                <div className="making-row">
+                    <div className="table-video-column">
+                        <ReactPlayer
+                            key={i.jedesteilnehmen[0].jedesspieler}
+                            className="player-itself"
+                            url= {i.jedesteilnehmen[0].jedeslink}
+                            width='79px'
+                            height='59px'
+                            light={true}
+                            controls = {true}
+                            />
                     </div>
-                )
-            })
-            dreiCard = this.state.importDefualtList.thridLine.map( i => {
-                let title = i.konzertname
-                if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
-                return (
-                    <div className='card-project'>
-                        <div className='up-gap'>
-                            <ReactPlayer
-                                key={i.erstespieler}
-                                className="player-itself"
-                                url= {i.erstelink}
-                                width='271px'
-                                height='150px'
-                                light={this.state.light}
-                                controls = 'true'
-                                />
-                        </div>
-                        <div className="limit-width-sieben"><hr /></div>
-                        <div className="container">
-                            <div className="making-row text-row-height">
-                                <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
-                            </div>
-                            <div className="zweite-infor">
-                                <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })
-            vierCard = this.state.importDefualtList.vierLine.map( i => {
-                let title = i.konzertname
-                if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
-                return (
-                    <div className='card-project'>
-                        <div className='up-gap'>
-                            <ReactPlayer
-                                key={i.erstespieler}
-                                className="player-itself"
-                                url= {i.erstelink}
-                                width='271px'
-                                height='150px'
-                                light={this.state.light}
-                                controls = 'true'
-                                />
-                        </div>
-                        <div className="limit-width-sieben"><hr /></div>
-                        <div className="container">
-                            <div className="making-row text-row-height">
-                                <div className="text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}><b>{title}</b></div>
-                            </div>
-                            <div className="zweite-infor">
-                                <div className="text-left-gap" >Debut: {i.datenundzeit}</div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })
-            phonePageList = this.state.importDefualtList.defualtPage.map( i => {
-                let title = i.konzertname
-                if (i.konzertname.length > 37) {title = title.substring(0,37) + " ..."}
-                return (
-                    <div className="making-row">
-                        <div className="table-video-column">
-                            <ReactPlayer
-                                key={i.erstespieler}
-                                className="player-itself"
-                                url= {i.erstelink}
-                                width='79px'
-                                height='59px'
-                                light={true}
-                                controls = {true}
-                                />
-                        </div>
-                        <div className="phone-list-text text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.spielernumer}`}}>{title}</div>
-                    </div>
-                )
-            })
-        }
+                    <div className="phone-list-text text-pointer text-left-gap" onClick={() => {window.location = `/jedes/id=${i.jedesleistung.spielernumer}`}}>{title}</div>
+                </div>
+            )
+        })
         return (
             <body>
             <br />
@@ -238,12 +147,7 @@ class Mitglied extends Component {
                 </div>
             </div>
             <br />
-            <div className="making-row center-by-margin">
-                <div className="width-column">{erstenCard}</div>
-                <div className="width-column">{zweitenCard}</div>
-                <div className="width-column">{dreiCard}</div>
-                <div className="width-column">{vierCard}</div>
-            </div>
+            <div className="center-by-margin">{jedesInterpret}</div>
             </div>}
             {this.state.width < 911 &&
             <div>

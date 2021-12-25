@@ -16,13 +16,11 @@
     padding: 2px;
 }
 .center-by-margin {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 17px;
     margin: 0 auto;
     width: 71%;
-    float: inherit;
-}
-.width-column {
-    width: 311px;
-    float: inherit;
 }
 .up-gap {
     margin-top: 3%;

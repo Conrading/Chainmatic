@@ -12,6 +12,15 @@ and (min-device-width: 911px) {
     .photo-area {
         width: 159px;
     }
+    .logout-text {
+        border: solid 1px rgb(212, 132, 132);
+        border-radius: 3px;
+        padding: 3px;
+        margin-left: 31px;
+        font-size: 11px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: brown;
+    }
 }
 
 @media screen 
@@ -25,6 +34,15 @@ and (max-device-width: 900px) {
     .photo-area {
         width: 31%;
     }
+    .logout-text {
+        border: solid 1px rgb(212, 132, 132);
+        border-radius: 1px;
+        padding: 1px;
+        margin-left: 17px;
+        font-size: 7px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: brown;
+    }
 }
 img {
     border-radius: 50%;
@@ -34,15 +52,6 @@ img {
     margin-left: 41%;
 }
 
-.logout-text {
-    border: solid 1px rgb(212, 132, 132);
-    border-radius: 3px;
-    padding: 3px;
-    margin-left: 31px;
-    font-size: 11px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: brown;
-}
 .follower-text {
     align-content: center;
     justify-content: center;

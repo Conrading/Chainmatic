@@ -11,19 +11,19 @@ and (min-device-width: 911px) {
     color: #2c3e50;
   }
   .jedes-spieler-infor {
-    border-radius: 3px;
-    height: 31px;
-    width: auto;
-    padding: 3px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+    margin: 0 auto;
+    width: 91%;
+    padding-left: 31px;
+    border-left: 2px solid burlywood;
   }
   .player-wrapper { 
-    position: relative;
-    float: inherit;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
     margin: 0 auto;
     align-content: center;
     justify-content: center;
-    width: 71%;
+    width: 91%;
     height: 100%;
   }
   .react-player {
@@ -57,10 +57,12 @@ and (min-device-width: 911px) {
     align-content: center;
     justify-content: center;
   }
-  .half-center-margin {
-    margin-left: 32%;
-  }
-  
+  .object-center-margin {
+    margin: 0 auto;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+  }  
   .input-personal-infor {
     border-radius: 3px;
     width: 311px;
@@ -86,12 +88,11 @@ and (max-device-width: 900px) {
     color: #2c3e50;
   }
   .jedes-spieler-infor {
-    border-radius: 3px;
-    height: 17px;
+    margin: 0 auto;
     width: auto;
+    padding-left: 7px;
     font-size: 11px;
-    padding: 1px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+    border-left: 2px solid burlywood;
   }
   .player-wrapper { 
     position: relative;
@@ -140,6 +141,47 @@ and (max-device-width: 900px) {
     align-content: center;
     justify-content: center;
   }
-  
 }
 
+.textarea-public-text {
+  margin: 0 auto;
+  width: 71%;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 31px;
+  border-left: 2px solid burlywood;
+}
+.modify-title-commend-area {
+  margin: 0 auto;
+  width: 71%;
+}
+.modify-title-input {
+  height: 31px;
+  border-top: 1px solid cornsilk;
+  border-left: 1px solid cornsilk;
+  border-right: 1px solid cornsilk;
+  border-bottom: 1px solid burlywood;
+}
+.modify-commend-input {
+  margin-top: 17px;
+  width: 100%;
+  height: 51px;
+}
+.modify-save {
+  margin-top: 17px;
+  border: 1px solid darkgoldenrod;
+  border-radius: 3px;
+  padding: 3px;
+  font-size: 11px;
+  width: 51px;
+  text-align: center;
+  cursor: pointer;
+}
+.modify-save:hover {
+  font-weight: 500;
+  color: brown;
+  background-color: cornsilk;
+}
+.modify-save:active {
+  border: 2px solid darkgoldenrod;
+  box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
+}
