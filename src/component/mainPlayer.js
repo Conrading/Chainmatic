@@ -14,6 +14,8 @@ class TestPlayer extends Component {
             //other player setting
             controls: true,
             playing: false,
+            dynamicWidth: "800px",
+            dynamicHeight: "460px",
 
             spielerZahlen: "",
 
@@ -51,7 +53,6 @@ class TestPlayer extends Component {
                     }
                 }
             } else if (res.data.status === '400' || res.data.status === '401') {
-                //token expire
                 localStorage.removeItem('token')
                 localStorage.removeItem('user')
                 this.setState({ editorVersionBeiKonrad: false })
@@ -70,6 +71,11 @@ class TestPlayer extends Component {
     }
     handleWindowSizeChange () {
       this.setState({ width: window.innerWidth });
+      if (this.state.width < 911) {
+          this.setState({dynamicWidth: '320px', dynamicHeight: '240px'}) 
+      } else {
+            this.setState({dynamicWidth: '800px', dynamicHeight: '460px'})
+        }
     };
     spielerZählen () {
         this.setState({ playing: true })
@@ -95,8 +101,8 @@ class TestPlayer extends Component {
                         ref={erstePlayer => (this.erstePlayer = erstePlayer)} 
                         onReady={() => {this.erstePlayer.seekTo(parseFloat(i.jedesspielerzeit))}} 
                         url= {i.jedeslink}
-                        width='800px'
-                        height='460px'
+                        width={this.state.dynamicWidth}
+                        height={this.state.dynamicHeight}
                         playing={this.state.playing}
                         volume={i.jedesvolume}
                         muted = {i.jedesmute}
@@ -120,8 +126,8 @@ class TestPlayer extends Component {
                         ref={zweitePlayer => (this.zweitePlayer = zweitePlayer)} 
                         onReady={() => {this.zweitePlayer.seekTo(parseFloat(i.jedesspielerzeit))}} 
                         url= {i.jedeslink}
-                        width='800px'
-                        height='460px'
+                        width={this.state.dynamicWidth}
+                        height={this.state.dynamicHeight}
                         playing={this.state.playing}
                         volume={i.jedesvolume}
                         muted = {i.jedesmute}
@@ -155,29 +161,6 @@ class TestPlayer extends Component {
                 </div>
                 )
         })
-        let zweiteCellPhonePlayer = this.state.playerList.map( i => {
-            return (
-                <div className='react-player'>
-                    <div className="text-trademakr-infor text-center jedes-spieler-infor">
-                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${i.konto}`}}>{i.konto}</b> in {i.ort}</div>
-                    <br />
-                    <ReactPlayer
-                    key={i.id}
-                    className="player-itself"
-                    ref={zweitePlayer => (this.zweitePlayer = zweitePlayer)} 
-                    onReady={() => {this.zweitePlayer.seekTo(parseFloat(i.jedesspielerzeit))}} 
-                    url= {i.jedeslink}
-                    width='320px'
-                    height='240px'
-                    playing={this.state.playing}
-                    volume={i.jedesvolume}
-                    muted = {i.jedesmute}
-                    loop = {i.jedesloop}
-                    controls = {this.state.controls}
-                    />
-                </div>
-                )
-        })
         return (
             <div>
             {this.state.width > 911 && 
@@ -188,13 +171,20 @@ class TestPlayer extends Component {
                     <div className="making-row player-wrapper">{ersteDesktopPlayer}{zweiteDesktopPlayer}</div>
                     <br />
                     <div className="making-row object-center-margin">
+                        {this.state.playing === false && 
                         <button className="player-control" onClick={() => {this.spielerZählen()}}>
                             <div className="making-row spieler-symble">
                                 ▷
                                 <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                             </div>
-                        </button>
-                        <button className="player-control" onClick={() => {this.setState({ playing: false })}}>| |</button>
+                        </button>}
+                        {this.state.playing === true && 
+                        <button className="player-control" onClick={() => {this.setState({ playing: false })}}>
+                            <div className="making-row spieler-symble">
+                                II
+                                <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
+                            </div>
+                        </button>}
                         <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
                     </div>
                     <br />
@@ -208,7 +198,7 @@ class TestPlayer extends Component {
                             this.setState({ jedesleistung: object })
                         }}/>
                         <br />
-                        <textarea className="modify-commend-input" placeholder="change commend.."onChange={(e) => {
+                        <textarea className="modify-commend-input" placeholder="change commend.." onChange={(e) => {
                             let object = this.state.jedesleistung
                             object.beschreibung = e.target.value
                             this.setState({ jedesleistung: object })
@@ -221,13 +211,20 @@ class TestPlayer extends Component {
                                     window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`
                                 }
                             })
-                        }}>Save</div>
+                        }}>Upadte</div>
                     </div>}
                     {this.state.editorVersionBeiKonrad === true && 
-                    <div><hr /><EditPlayer 
-                        jedesleistung={this.state.jedesleistung}
-                        playerList={this.state.playerList}
-                        url={this.props.match.params.jedesVideoSpieler}/>
+                    <div>
+                        <hr />
+                        <input placeholder="Iphone local location" onChange={(e) => {
+                            let object = this.state.jedesleistung
+                            object.vollspieleraddress = e.target.value
+                            this.setState({ jedesleistung: object })
+                        }}></input>
+                        <EditPlayer 
+                            jedesleistung={this.state.jedesleistung}
+                            playerList={this.state.playerList}
+                            url={this.props.match.params.jedesVideoSpieler}/>
                     </div>}
                 </body>}
             {this.state.width < 911 && 
@@ -235,26 +232,31 @@ class TestPlayer extends Component {
                 <div className="text-center title-jedes-collaboration">{this.state.jedesleistung.konzertname}</div>
                 <div className="text-center making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.jedesleistung.datenundzeit}</div>
                 <br />
-                {this.state.iphoneLimit === true && <div>still not working on iphone</div>
-                /*<video width="320" height="240" autoplay controls>
-                    <source src="https://www.youtube.com/watch?v=HpmL7dvyRUY"></source>
-                </video>*/}
-                {this.state.iphoneLimit === false && <div className="making-column player-wrapper">{ersteCellPhonePlayer}{zweiteCellPhonePlayer}</div>}
+                {this.state.iphoneLimit === true && 
+                <video className="play-control-center-margin" width="320" height="240" autoplay controls>
+                    <source src={this.state.jedesleistung.vollspieleraddress}></source>
+                </video>}
+                {this.state.iphoneLimit === false && <div className="making-column player-wrapper">{ersteDesktopPlayer}{zweiteDesktopPlayer}</div>}
                 <br />
                     <div className="making-row play-control-center-margin">
-                        {this.state.iphoneLimit === false && <button className="player-control" onClick={() => {this.spielerZählen()}}>
+                        {this.state.playing === false && this.state.iphoneLimit === false && 
+                        <button className="player-control" onClick={() => {this.spielerZählen()}}>
                             <div className="making-row spieler-symble">
                                 ▷
                                 <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                             </div>
                         </button>}
-                        {this.state.iphoneLimit === false && <button className="player-control" 
-                            onClick={() => {this.setState({ 
-                                erstePlaying: false, 
-                                zweitePlaying: false, 
-                                dreiPlaying: false, 
-                                viertePlaying: false })}}>| |</button>}
-                        <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
+                        {this.state.playing === true && this.state.iphoneLimit === false && 
+                        <button className="player-control" onClick={() => {this.setState({ playing: false })}}>
+                            <div className="making-row spieler-symble">
+                                II
+                                <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
+                            </div>
+                        </button>}
+                        {this.state.playing === true && this.state.iphoneLimit === false &&
+                        <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>}
+                    <br />
+                    <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
                     </div>
                 </body>}
             </div>
