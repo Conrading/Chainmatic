@@ -188,13 +188,25 @@ class TestPlayer extends Component {
                         <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
                     </div>
                     <br />
-                    <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
+                    <div className="making-row">
+                        <div className="business-link-click">
+                            {this.state.jedesleistung.geschafturl === null && <div className="business-link-click-text-null">No Link</div>}
+                            {this.state.jedesleistung.geschafturl !== null && <div className="business-link-click-text-value" onClick={() => {window.location.href = this.state.jedesleistung.geschafturl }}>Go to Link</div>}
+                        </div>
+                        <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
+                    </div>
                     {this.state.bearbeitenHautBeiMitglied === true && 
                     <div className="modify-title-commend-area">
                         <br />
                         <input className="modify-title-input" placeholder="change title..." onChange={(e) => {
                             let object = this.state.jedesleistung
                             object.konzertname = e.target.value
+                            this.setState({ jedesleistung: object })
+                        }}/>
+                        <br />
+                        <input className="modify-title-input" placeholder="add/change business link .." onChange={(e) => {
+                            let object = this.state.jedesleistung
+                            object.geschafturl = e.target.value
                             this.setState({ jedesleistung: object })
                         }}/>
                         <br />
@@ -256,7 +268,13 @@ class TestPlayer extends Component {
                         {this.state.playing === true && this.state.iphoneLimit === false &&
                         <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>}
                     <br />
-                    <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
+                    </div>
+                    <div className="making-row">
+                        <div className="business-link-click">
+                            {this.state.jedesleistung.geschafturl === null && <div className="business-link-click-text-null">No Link</div>}
+                            {this.state.jedesleistung.geschafturl !== null && <div className="business-link-click-text-value" onClick={() => {window.location.href = this.state.jedesleistung.geschafturl }}>Go to Link</div>}
+                        </div>
+                        <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
                     </div>
                 </body>}
             </div>

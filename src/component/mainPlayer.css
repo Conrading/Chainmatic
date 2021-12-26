@@ -71,9 +71,27 @@ and (min-device-width: 911px) {
   .text-left-gap {
     margin-left: .5rem;
   }
+  .business-link-click {
+    width: 231px;
+    text-align: center;
+  }
+  .business-link-click-text-null {
+    padding: 3px;
+    font-family: monospace;
+    color: rgb(211, 207, 157);
+  }
+  .business-link-click-text-value {
+    padding: 3px;
+    font-family: monospace;
+    font-weight: 500;
+    color: darkmagenta;
+    cursor: pointer;
+  }
+  .business-link-click-text-value:hover {
+    text-shadow: 0 0 7px rgb(204, 202, 216);
+    font-weight: 700;
+  }
   .textarea-public-text {
-    margin: 0 auto;
-    width: 71%;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 31px;
     border-left: 2px solid burlywood;
@@ -148,9 +166,29 @@ and (max-device-width: 900px) {
     align-content: center;
     justify-content: center;
   }
+  .business-link-click {
+    width: 91px;
+    text-align: center;
+  }
+  .business-link-click-text-null {
+    padding: 1px;
+    font-size: 11px;
+    font-family: monospace;
+    color: rgb(211, 207, 157);
+  }
+  .business-link-click-text-value {
+    padding: 1px;
+    font-size: 11px;
+    font-family: monospace;
+    font-weight: 500;
+    color: darkmagenta;
+    cursor: pointer;
+  }
+  .business-link-click-text-value:hover {
+    text-shadow: 0 0 3px rgb(204, 202, 216);
+    font-weight: 700;
+  }
   .textarea-public-text {
-    margin: 0 auto;
-    width: 71%;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     padding-left: 11px;
@@ -163,6 +201,7 @@ and (max-device-width: 900px) {
   width: 71%;
 }
 .modify-title-input {
+  width: 371px;
   height: 31px;
   border-top: 1px solid cornsilk;
   border-left: 1px solid cornsilk;
