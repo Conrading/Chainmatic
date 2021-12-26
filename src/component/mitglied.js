@@ -115,10 +115,10 @@ class Mitglied extends Component {
                 <div className="photo-area">
                     {this.state.bildung === null && <div><img top height="100px" width="100px" class="center"
                         src="https://miro.medium.com/max/1400/1*N5w9Ay0VlQBKF4b11C0LdQ.png"
-                        alt="no account image" /></div>}
+                        alt="defualt value" /></div>}
                     {this.state.bildung !== null && <div><img top height="100px" width="100px" class="center"
                         src={this.state.bildung}
-                        alt="no account image" /></div>}
+                        alt="access from db" /></div>}
                 </div>
                 <div >
                     <div className="personal-left-gap making-row personal-upper-right-gap">
@@ -133,7 +133,7 @@ class Mitglied extends Component {
                         {this.state.verified === true && 
                         <div className="making-row"><img top height="21px" width="21px" class="center"
                         src="https://www.myusfra.org/images/1.3_1.png"
-                        alt="no verified image" /><b>verified!</b></div>}
+                        alt="load verified" /><b>verified!</b></div>}
                     </div>
                     <div className="personal-left-gap making-row personal-upper-right-gap-second">
                         <div>in {this.state.ort} |</div>
@@ -155,10 +155,10 @@ class Mitglied extends Component {
                 <div className="photo-area">
                     {this.state.bildung === null && <div><img top height="51px" width="51px" class="center"
                         src="https://miro.medium.com/max/1400/1*N5w9Ay0VlQBKF4b11C0LdQ.png"
-                        alt="no account image" /></div>}
+                        alt="defualt value" /></div>}
                     {this.state.bildung !== null && <div><img top height="51px" width="51px" class="center"
                         src={this.state.bildung}
-                        alt="no account image" /></div>}
+                        alt="load from db" /></div>}
                 </div>
                 <div >
                     <div className="personal-left-gap making-row personal-upper-right-gap">
@@ -173,7 +173,7 @@ class Mitglied extends Component {
                         {this.state.verified === true && 
                         <div className="making-row"><img top height="15px" width="15px" class="center"
                         src="https://www.myusfra.org/images/1.3_1.png"
-                        alt="no verified image" /><b>verified!</b></div>}
+                        alt="varified" /><b>verified!</b></div>}
                     </div>
                     <div className="personal-left-gap making-row personal-upper-right-gap-second">
                         <div>in {this.state.ort} |</div>

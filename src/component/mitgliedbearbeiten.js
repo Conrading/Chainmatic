@@ -11,6 +11,19 @@ class Mitgliedbearbeiten extends Component {
             testpasswordZweite: null,
             letterCheck: "Password no change",
 
+            imgLocation: [
+                '/img/01.jpg', 
+                '/img/02.jpg', 
+                '/img/03.jpg', 
+                '/img/04.jpg', 
+                '/img/05.jpg', 
+                '/img/06.jpg', 
+                '/img/07.jpg', 
+                '/img/08.jpg', 
+                '/img/09.jpg',
+                'https://miro.medium.com/max/1400/1*N5w9Ay0VlQBKF4b11C0LdQ.png'
+                        ],
+
             verified: null,
             bildung: null,
             bildungURL: null,
@@ -74,13 +87,19 @@ class Mitgliedbearbeiten extends Component {
         }
     }
     render () {
+        let imagineArray = this.state.imgLocation.map( i => {
+            return (
+            <div className="img-jedes-block-define" onClick={() => {this.setState({ bildung: i })}}>
+                <img top height="51px" width="51px" src={i} alt="access db" />
+            </div>)
+        })
         return (
             <body>
                 <br />
                 <div className="text-center">
                     {this.state.bildung !== null && <div><img top height="100px" width="100px"
                         src={this.state.bildung}
-                        alt="no account image" /></div>}
+                        alt="access db" /></div>}
                     <div className="text-mitglied-title">{localStorage.getItem('user')}</div>
                 </div>
                 <div className="block-mitglied-information-aktualisieren">
@@ -99,10 +118,14 @@ class Mitgliedbearbeiten extends Component {
                             {this.state.testpasswordEin === this.state.testpasswordZweite && (this.state.testpasswordEin !== null || this.state.testpasswordEin === "") && 
                             <div className="jedes-linie-aktualisieren passwort-text">same Password!</div>}
                         </div>
-                        <div className="jedes-linie-aktualisieren making-row">
+                        <div className="img-area-define">
+                            <div className="img-text">Choose one for your photo</div>
+                            <div className="making-row">{imagineArray}</div>
+                        </div>
+                        {/*<div className="jedes-linie-aktualisieren making-row">
                             <input type="text" placeholder="Photo" className="input-anmeldung" onChange={(e) => {this.setState({ bildung: e.target.value })}}/>
                             <div className="jedes-linie-jezig-data">{this.state.bildungURL}</div>
-                        </div>
+                        </div>*/}
                         <div className="jedes-linie-aktualisieren making-row">
                             <input type="text" placeholder="Location" className="input-anmeldung" onChange={(e) => {this.setState({ ort: e.target.value })}}/>
                             <div className="jedes-linie-jezig-data">{this.state.ort}</div>

@@ -42,6 +42,8 @@ and (max-device-width: 900px) {
         font-size: 7px;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         color: brown;
+        height: 71%;
+        text-align: center;
     }
 }
 img {
