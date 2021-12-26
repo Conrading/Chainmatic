@@ -65,9 +65,9 @@ class Mitglied extends Component {
                 <div className='card-project'>
                     <div className='up-gap'>
                         <ReactPlayer
-                            key={i.jedesteilnehmen[0].jedesspieler}
+                            key={i.jedesteilnehmen.jedesspieler}
                             className="player-itself"
-                            url= {i.jedesteilnehmen[0].jedeslink}
+                            url= {i.jedesteilnehmen.jedeslink}
                             width='271px'
                             height='150px'
                             light={this.state.light}
@@ -93,9 +93,9 @@ class Mitglied extends Component {
                 <div className="making-row">
                     <div className="table-video-column">
                         <ReactPlayer
-                            key={i.jedesteilnehmen[0].jedesspieler}
+                            key={i.jedesteilnehmen.jedesspieler}
                             className="player-itself"
-                            url= {i.jedesteilnehmen[0].jedeslink}
+                            url= {i.jedesteilnehmen.jedeslink}
                             width='79px'
                             height='59px'
                             light={true}
