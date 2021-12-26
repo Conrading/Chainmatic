@@ -4,6 +4,7 @@
 /node_modules
 /backup
 /public/video
+/public/img
 /.pnp
 .pnp.js
 src/component/http-axios.js
