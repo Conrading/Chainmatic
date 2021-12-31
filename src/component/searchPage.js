@@ -62,7 +62,7 @@ class Hauptsächlich extends Component {
                             width='271px'
                             height='150px'
                             light={this.state.light}
-                            controls = 'true'
+                            controls = {true}
                             />
                     </div>
                     <div className="limit-width-sieben"><hr /></div>

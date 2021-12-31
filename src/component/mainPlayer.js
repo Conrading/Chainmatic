@@ -17,6 +17,7 @@ class TestPlayer extends Component {
             dynamicWidth: "800px",
             dynamicHeight: "460px",
 
+
             spielerZahlen: "",
 
             iphoneLimit: false,
@@ -78,7 +79,7 @@ class TestPlayer extends Component {
         }
     };
     spielerZählen () {
-        this.setState({ playing: true })
+        this.setState({ playing: true  })
         http.post("/spielerZahlen", {"spielernumer": this.props.match.params.jedesVideoSpieler}).then((res) => {
             if (res.data.state === "fail") {
                 this.setState({ jedesleistung: {"konzertname": "System Failure!"}})
@@ -89,18 +90,20 @@ class TestPlayer extends Component {
     }
     render() {
         let ersteDesktopPlayer = this.state.playerList.map( i => {
+            let verifySource = i.jedeslink.split('/')
             if (i.stellung === "1") {
                 return (
                     <div className='react-player'>
                         <div className="general-text jedes-spieler-infor">
                             <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${i.konto}`}}>{i.konto}</b> in {i.ort}</div>
                         <br />
+                        {verifySource[0] === "https:" && 
                         <ReactPlayer
                         key={i.id}
                         className="player-itself"
                         ref={erstePlayer => (this.erstePlayer = erstePlayer)} 
                         onReady={() => {this.erstePlayer.seekTo(parseFloat(i.jedesspielerzeit))}} 
-                        url= {i.jedeslink}
+                        url={i.jedeslink}
                         width={this.state.dynamicWidth}
                         height={this.state.dynamicHeight}
                         playing={this.state.playing}
@@ -108,24 +111,43 @@ class TestPlayer extends Component {
                         muted = {i.jedesmute}
                         loop = {i.jedesloop}
                         controls = {this.state.controls}
-                        />
+                        />}
+                        {verifySource[0] !== "https:" &&
+                        <ReactPlayer
+                        key={i.id}
+                        className="player-itself"
+                        url={i.jedeslink}
+                        width={this.state.dynamicWidth}
+                        height={this.state.dynamicHeight}
+                        playing={this.state.playing}
+                        volume={i.jedesvolume}
+                        muted = {i.jedesmute}
+                        loop = {i.jedesloop}
+                        controls = {this.state.controls}
+                        />}
+                        {/*verifySource[0] !== "https:" &&
+                        <video ref="erstePlayer" className="player-itself" controls width={this.state.dynamicWidth} height={this.state.dynamicHeight}>
+                            <source src={i.jedeslink}/>
+                        </video>*/}
                     </div>
                     )
                 }
         })
         let zweiteDesktopPlayer = this.state.playerList.map( i => {
+            let verifySource = i.jedeslink.split('/')
             if (i.stellung === "2") {
                 return (
                     <div className='react-player'>
                         <div className="general-text jedes-spieler-infor">
                             <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${i.konto}`}}>{i.konto}</b> in {i.ort}</div>
                         <br />
+                        {verifySource[0] === "https:" && 
                         <ReactPlayer
                         key={i.id}
                         className="player-itself"
                         ref={zweitePlayer => (this.zweitePlayer = zweitePlayer)} 
                         onReady={() => {this.zweitePlayer.seekTo(parseFloat(i.jedesspielerzeit))}} 
-                        url= {i.jedeslink}
+                        url={i.jedeslink}
                         width={this.state.dynamicWidth}
                         height={this.state.dynamicHeight}
                         playing={this.state.playing}
@@ -133,33 +155,23 @@ class TestPlayer extends Component {
                         muted = {i.jedesmute}
                         loop = {i.jedesloop}
                         controls = {this.state.controls}
-                        />
+                        />}
+                        {verifySource[0] !== "https:" &&
+                        <ReactPlayer
+                        key={i.id}
+                        className="player-itself"
+                        url={i.jedeslink}
+                        width={this.state.dynamicWidth}
+                        height={this.state.dynamicHeight}
+                        playing={this.state.playing}
+                        volume={i.jedesvolume}
+                        muted = {i.jedesmute}
+                        loop = {i.jedesloop}
+                        controls = {this.state.controls}
+                        />}
                     </div>
                     )
                 }
-        })
-        let ersteCellPhonePlayer = this.state.playerList.map( i => {
-            return (
-                <div className='react-player'>
-                    <div className="text-trademakr-infor text-center jedes-spieler-infor">
-                        <b className="text-pointer" onClick={() => {window.location = `/mitglied/id=${i.konto}`}}>{i.konto}</b> in {i.ort}</div>
-                    <br />
-                    <ReactPlayer
-                    key={i.id}
-                    className="player-itself"
-                    ref={erstePlayer => (this.erstePlayer = erstePlayer)} 
-                    onReady={() => {this.erstePlayer.seekTo(parseFloat(i.jedesspielerzeit))}} 
-                    url= {i.jedeslink}
-                    width='320px'
-                    height='240px'
-                    playing={this.state.playing}
-                    volume={i.jedesvolume}
-                    muted = {i.jedesmute}
-                    loop = {i.jedesloop}
-                    controls = {this.state.controls}
-                    />
-                </div>
-                )
         })
         return (
             <div>
@@ -248,7 +260,7 @@ class TestPlayer extends Component {
                 <video className="play-control-center-margin" width="320" height="240" autoplay controls>
                     <source src={this.state.jedesleistung.vollspieleraddress}></source>
                 </video>}
-                {this.state.iphoneLimit === false && <div className="making-column player-wrapper">{ersteDesktopPlayer}{zweiteDesktopPlayer}</div>}
+                {this.state.iphoneLimit === false && <div className="making-column player-wrapper">{ersteDesktopPlayer}<br />{zweiteDesktopPlayer}</div>}
                 <br />
                     <div className="making-row play-control-center-margin">
                         {this.state.playing === false && this.state.iphoneLimit === false && 
@@ -265,11 +277,10 @@ class TestPlayer extends Component {
                                 <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                             </div>
                         </button>}
-                        {this.state.playing === true && this.state.iphoneLimit === false &&
+                        {this.state.iphoneLimit === false &&
                         <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>}
-                    <br />
                     </div>
-                    <div className="making-row">
+                    <div className="making-row gap-upper">
                         <div className="business-link-click">
                             {this.state.jedesleistung.geschafturl === null && <div className="business-link-click-text-null">No Link</div>}
                             {this.state.jedesleistung.geschafturl !== null && <div className="business-link-click-text-value" onClick={() => {window.location.href = this.state.jedesleistung.geschafturl }}>Go to Link</div>}
