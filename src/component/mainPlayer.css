@@ -98,6 +98,7 @@ and (min-device-width: 911px) {
   }
 }
 
+
 @media screen 
 and (max-device-width: 900px) {
   .title-jedes-collaboration {
@@ -196,6 +197,17 @@ and (max-device-width: 900px) {
   }
 }
 
+.edit-create-project-button {
+  margin: 0 auto;
+  margin-bottom: 17px;
+  border: 1px solid darkgoldenrod;
+  border-radius: 3px;
+  padding: 3px;
+  font-size: 11px;
+  width: 551px;
+  text-align: center;
+  cursor: pointer;
+}
 .modify-title-commend-area {
   margin: 0 auto;
   width: 71%;
@@ -214,21 +226,59 @@ and (max-device-width: 900px) {
   height: 51px;
 }
 .modify-save {
+  margin: 0 auto;
   margin-top: 17px;
   border: 1px solid darkgoldenrod;
   border-radius: 3px;
   padding: 3px;
   font-size: 11px;
-  width: 51px;
+  width: 151px;
   text-align: center;
   cursor: pointer;
 }
 .modify-save:hover {
   font-weight: 500;
   color: brown;
+  border: 2px solid darkgoldenrod;
   background-color: cornsilk;
 }
 .modify-save:active {
   border: 2px solid darkgoldenrod;
   box-shadow: 0 7px 7px 0 solid rgb(0, 0, 0);
+}
+
+.jedes-edit-body-height {
+  height: 371px;
+}
+.jedes-player-edit-input {
+  width: 271px;
+  height: 17px;
+  border-top: 1px solid cornsilk;
+  border-left: 1px solid cornsilk;
+  border-right: 1px solid cornsilk;
+  border-bottom: 1px solid burlywood;
+  margin-bottom: 11px;
+}
+.jedes-player-edit-text {
+  margin-left: 31px;
+  font-size: 13px;
+  text-align: center;
+}
+.jedes-player-toggle-swtch {
+  font-size: 13px;
+  padding: 13px;
+  cursor: pointer;
+}
+.jedes-position-selection-area {
+  height: 100%;
+  padding: 11px;
+  align-content: center;
+  justify-content: center;
+}
+.jedes-position-edit-selection {
+  margin: 0 auto;
+  width: 71px;
+  border: 1px solid rgb(81, 81, 167);
+  border-radius: 3px;
+  background-color: transparent;
 }

@@ -16,6 +16,7 @@ class Mitglied extends Component {
             importDefualtList: [],
 
             followerStatus: false,
+            projektTeilnahmen: false,
             width: window.innerWidth,
         }
         this.abmeldung = this.abmeldung.bind(this)
@@ -32,6 +33,20 @@ class Mitglied extends Component {
                 importDefualtList: res.data.vollList
             })
             if (res.data.followerStatus === 0) { this.setState({ followerStatus: false })} else {this.setState({ followerStatus: true })}
+            const zertifikat = {"token": localStorage.getItem('token')}
+            http.post("/api/post", zertifikat).then((res) => {
+                if (res.data.status === 'login' && this.props.match.params.kontoname === localStorage.getItem('user')) {
+                    this.setState({ projektTeilnahmen: true })
+                } else if (res.data.status === '400' || res.data.status === '401') {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('user')
+                    this.setState({ editorVersionBeiKonrad: false })
+                } else {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('user')
+                    this.setState({ editorVersionBeiKonrad: false })
+                }
+            })
         })
     }
     componentWillMount() {
@@ -146,6 +161,9 @@ class Mitglied extends Component {
                     </div>
                 </div>
             </div>
+                {this.state.projektTeilnahmen === true && <div 
+                    onClick={() => { window.location = `/jedes/id=default` }} 
+                    className="edit-create-project-button">Create Project</div>}
             <br />
             <div className="center-by-margin">{jedesInterpret}</div>
             </div>}
