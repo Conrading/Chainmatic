@@ -8,6 +8,7 @@ and (min-device-width: 911px) {
         display: flex;
         flex-direction: row;
         margin: 0 auto;
+        margin-bottom: 17px;
     }
     .photo-area {
         width: 159px;

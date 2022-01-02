@@ -51,7 +51,7 @@ class TestPlayer extends Component {
                 } 
                 if (res.data.status === 'login') {
                     for (let i = 0; i < this.state.playerList.length; i++) {
-                        if (this.state.playerList[i].jedesspieler === localStorage.getItem('user')) {
+                        if (this.state.playerList[i].jedesspieler === localStorage.getItem('user') || this.state.jedesleistung.erfinder === localStorage.getItem('user')) {
                             this.setState({ projektTeilnahmen: true })
                         } else if (this.state.jedesleistung.spielernumer === "default") {
                             this.setState({ projektTeilnahmen: true })
@@ -411,11 +411,12 @@ class TestPlayer extends Component {
                     <div className="text-center title-jedes-collaboration general-text">{this.state.jedesleistung.konzertname}</div>
                     <div className="making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.jedesleistung.datenundzeit}</div>
                     <br />
-                    {this.state.projektTeilnahmen === true && <div 
+                    {this.state.projektTeilnahmen === true && 
+                    <div 
                         onClick={() => { this.setState({ bearbeitenHautBeiMitglied: !this.state.bearbeitenHautBeiMitglied })}} 
                         className="edit-create-project-button">
                             {this.state.bearbeitenHautBeiMitglied === false && <div>Edit/Create Project</div>}
-                            {this.state.bearbeitenHautBeiMitglied === true && <div>Close</div>}
+                            {this.state.bearbeitenHautBeiMitglied === true && <div>Return</div>}
                             </div>}
                     <div className="making-row player-wrapper">{ersteDesktopPlayer}{zweiteDesktopPlayer}</div>
                     <br />
@@ -444,6 +445,14 @@ class TestPlayer extends Component {
                             {this.state.jedesleistung.geschafturl !== null && <div className="business-link-click-text-value" onClick={() => {window.location.href = this.state.jedesleistung.geschafturl }}>Go to Link</div>}
                         </div>
                         <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
+                    </div>
+                    <br />
+                    <div className="making-row">
+                        <div className="business-link-click">
+                        <div className="business-link-click-text-null">Project Created by:</div>
+                        </div>
+                        <div className="textarea-public-text text-pointer" onClick={() => {
+                            window.location = `/mitglied/id=${localStorage.getItem('user')}`}}>{this.state.jedesleistung.erfinder}</div>
                     </div>
                     {this.state.bearbeitenHautBeiMitglied === true && 
                     <div className="modify-title-commend-area">
@@ -477,7 +486,11 @@ class TestPlayer extends Component {
                                 })
                             }}>Upadte</div>}
                             <div className="modify-save" onClick={() => {
-                                http.post("/hinzufugen", {"jedesleistung": this.state.jedesleistung, "playerList": this.state.playerList }).then((res) => {
+                                http.post("/hinzufugen", {
+                                    "jedesleistung": this.state.jedesleistung, 
+                                    "playerList": this.state.playerList,
+                                    "creator": localStorage.getItem('user')
+                                 }).then((res) => {
                                     if (res.data.state === "fail") {
                                         this.setState({ jedesleistung: {"konzertname": "System Failure!"}})
                                     } else {
@@ -518,10 +531,12 @@ class TestPlayer extends Component {
                 <div className="text-center title-jedes-collaboration">{this.state.jedesleistung.konzertname}</div>
                 <div className="text-center making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.jedesleistung.datenundzeit}</div>
                 <br />
-                {this.state.iphoneLimit === true && 
+                {this.state.iphoneLimit === true && this.state.jedesleistung.vollspieleraddress !== null &&
                 <video className="play-control-center-margin" width="320" height="240" autoplay controls>
                     <source src={this.state.jedesleistung.vollspieleraddress}></source>
                 </video>}
+                {this.state.iphoneLimit === true && this.state.jedesleistung.vollspieleraddress === null &&
+                <div>Iphone does not support this collaboration</div>}
                 {this.state.iphoneLimit === false && <div className="making-column player-wrapper">{ersteDesktopPlayer}<br />{zweiteDesktopPlayer}</div>}
                 <br />
                     <div className="making-row play-control-center-margin">
@@ -548,6 +563,13 @@ class TestPlayer extends Component {
                             {this.state.jedesleistung.geschafturl !== null && <div className="business-link-click-text-value" onClick={() => {window.location.href = this.state.jedesleistung.geschafturl }}>Go to Link</div>}
                         </div>
                         <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
+                    </div>
+                    <br />
+                    <div className="making-row gap-upper">
+                        <div className="business-link-click"><div className="business-link-click-text-null">Project Created by: </div></div>
+                        <div className="textarea-public-text text-pointer" onClick={() => {
+                            window.location = `/mitglied/id=${localStorage.getItem('user')}`
+                        }}>{this.state.jedesleistung.erfinder}</div>
                     </div>
                 </body>}
             </div>
