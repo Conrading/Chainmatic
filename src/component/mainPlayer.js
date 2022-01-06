@@ -23,6 +23,7 @@ class TestPlayer extends Component {
 
             iphoneLimit: false,
 
+            projectInforDropDown: false,
             editorVersionBeiKonrad: false,
             projektTeilnahmen: false,
             bearbeitenHautBeiMitglied: false,
@@ -408,8 +409,23 @@ class TestPlayer extends Component {
             <div>
             {this.state.width > 911 && 
                 <body>
-                    <div className="text-center title-jedes-collaboration general-text">{this.state.jedesleistung.konzertname}</div>
-                    <div className="making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.jedesleistung.datenundzeit}</div>
+                    <div className="text-center title-jedes-collaboration text-pointer" 
+                        onClick={() => {this.setState({ projectInforDropDown: !this.state.projectInforDropDown })}}
+                        >◌ {this.state.jedesleistung.konzertname} ◌</div>
+                    {this.state.projectInforDropDown === true && 
+                        <div className="project-inform-frame">
+                            <div className="making-row">
+                                <div className="project-inform-column">
+                                    <div className="project-inform-erste-text">⌗ Debut:</div>
+                                    <div className="project-inform-zweite-text">{this.state.jedesleistung.datenundzeit}</div>
+                                </div>
+                                <div>
+                                    <div className="project-inform-erste-text">⌗ Project Created by</div>
+                                    <div className="project-inform-zweite-text text-pointer" onClick={() => {
+                                        window.location = `/mitglied/id=${this.state.jedesleistung.erfinder}`}}>{this.state.jedesleistung.erfinder}</div>
+                                </div>
+                            </div>
+                        </div>}
                     <br />
                     {this.state.projektTeilnahmen === true && 
                     <div 
@@ -436,7 +452,7 @@ class TestPlayer extends Component {
                                 <div className="spieler-zahlen general-text">{this.state.spielerZahlen}</div>
                             </div>
                         </button>}
-                        <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>Refresh</button>
+                        <button className="player-control" onClick={() => {window.location = `/jedes/id=${this.props.match.params.jedesVideoSpieler}`}}>⟲</button>
                     </div>}
                     <br />
                     <div className="making-row">
@@ -445,14 +461,6 @@ class TestPlayer extends Component {
                             {this.state.jedesleistung.geschafturl !== null && <div className="business-link-click-text-value" onClick={() => {window.location.href = this.state.jedesleistung.geschafturl }}>Go to Link</div>}
                         </div>
                         <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
-                    </div>
-                    <br />
-                    <div className="making-row">
-                        <div className="business-link-click">
-                        <div className="business-link-click-text-null">Project Created by:</div>
-                        </div>
-                        <div className="textarea-public-text text-pointer" onClick={() => {
-                            window.location = `/mitglied/id=${localStorage.getItem('user')}`}}>{this.state.jedesleistung.erfinder}</div>
                     </div>
                     {this.state.bearbeitenHautBeiMitglied === true && 
                     <div className="modify-title-commend-area">
@@ -528,8 +536,23 @@ class TestPlayer extends Component {
                 </body>}
             {this.state.width < 911 && 
                 <body>
-                <div className="text-center title-jedes-collaboration">{this.state.jedesleistung.konzertname}</div>
-                <div className="text-center making-row general-text"><div className="text-courier-infor">Debut:</div> {this.state.jedesleistung.datenundzeit}</div>
+                <div className="text-center title-jedes-collaboration text-pointer" 
+                        onClick={() => {this.setState({ projectInforDropDown: !this.state.projectInforDropDown })}}
+                        > {this.state.jedesleistung.konzertname}</div>
+                {this.state.projectInforDropDown === true && 
+                    <div className="project-inform-frame">
+                        <div className="making-row">
+                            <div className="project-inform-column">
+                                <div className="project-inform-erste-text">◉ Debut:</div>
+                                <div className="project-inform-zweite-text">{this.state.jedesleistung.datenundzeit}</div>
+                            </div>
+                            <div>
+                                <div className="project-inform-erste-text">◉ Project Created by</div>
+                                <div className="project-inform-zweite-text text-pointer" onClick={() => {
+                                    window.location = `/mitglied/id=${this.state.jedesleistung.erfinder}`}}>{this.state.jedesleistung.erfinder}</div>
+                            </div>
+                        </div>
+                    </div>}
                 <br />
                 {this.state.iphoneLimit === true && this.state.jedesleistung.vollspieleraddress !== null &&
                 <video className="play-control-center-margin" width="320" height="240" autoplay controls>
@@ -563,13 +586,6 @@ class TestPlayer extends Component {
                             {this.state.jedesleistung.geschafturl !== null && <div className="business-link-click-text-value" onClick={() => {window.location.href = this.state.jedesleistung.geschafturl }}>Go to Link</div>}
                         </div>
                         <div className="textarea-public-text">{this.state.jedesleistung.beschreibung}</div>
-                    </div>
-                    <br />
-                    <div className="making-row gap-upper">
-                        <div className="business-link-click"><div className="business-link-click-text-null">Project Created by: </div></div>
-                        <div className="textarea-public-text text-pointer" onClick={() => {
-                            window.location = `/mitglied/id=${localStorage.getItem('user')}`
-                        }}>{this.state.jedesleistung.erfinder}</div>
                     </div>
                 </body>}
             </div>
