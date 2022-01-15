@@ -477,6 +477,21 @@ class TestPlayer extends Component {
                             this.setState({ jedesleistung: object })
                         }}/>
                         <br />
+                        {this.state.jedesleistung.offentlich === true && <div className="public-status-switch text-pointer" onClick={() => {
+                            if (window.confirm("Are you sure you want to switch the prject to Private? then only the people you allow can see the Project.")) {
+                                let object = this.state.jedesleistung
+                                object.offentlich = false
+                                this.setState({ jedesleistung: object })
+                            } 
+                        }}>Public</div>}
+                        {this.state.jedesleistung.offentlich !== true && <div className="public-status-switch text-pointer" onClick={() => {
+                            if (window.confirm("Are you sure you want to switch the prject to Public? then everyone can see the Project.")) {
+                                let object = this.state.jedesleistung
+                                object.offentlich = true
+                                this.setState({ jedesleistung: object })
+                            } 
+                        }}>Private</div>}
+                        <br />
                         <textarea className="modify-commend-input" placeholder="change commend.." onChange={(e) => {
                             let object = this.state.jedesleistung
                             object.beschreibung = e.target.value

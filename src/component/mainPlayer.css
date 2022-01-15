@@ -274,6 +274,11 @@ and (max-device-width: 900px) {
   border-right: 1px solid cornsilk;
   border-bottom: 1px solid burlywood;
 }
+.public-status-switch {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 17px;
+  margin-top: 17px;
+}
 .modify-commend-input {
   margin-top: 17px;
   width: 100%;
