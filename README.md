@@ -1,5 +1,7 @@
 ### React.js/Node.js/PostgreSQL application
 
+this application is for music collaboration
+
 ### `npm start`
 
 Runs the app in the development mode.\
